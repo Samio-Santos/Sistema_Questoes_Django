@@ -1,0 +1,225 @@
+body {
+  background: url("../img/pexels-katerina-holmes-5905448.jpg") no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+main {
+  height: 100vh;
+  background-color: rgba(245, 245, 245, 0.705);
+}
+
+main .container-logado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+main .container-logado p {
+  border-radius: 5px;
+  padding: 15px;
+  background-color: rgba(255, 255, 0, 0.411);
+  font-weight: bold;
+}
+
+form {
+  font-family: sans-serif;
+}
+
+fieldset {
+  border: none;
+  padding: 1rem;
+}
+
+.box-login {
+  margin-top: 15vh;
+}
+
+.input-block {
+  margin-bottom: 1rem;
+}
+
+.input-block label {
+  font-weight: bold;
+  position: relative;
+  bottom: 0.5rem;
+}
+
+.input-block a {
+  text-decoration: underline;
+  color: black;
+  font-weight: bold;
+}
+
+.input-block input {
+  width: 80%;
+  outline: none;
+  padding: 9px;
+  border-radius: 3px;
+  border: 0.5px solid black;
+}
+
+.input-block input:focus {
+  border: 1.5px solid black;
+}
+
+.box-password {
+  width: 0;
+  height: 0;
+  position: relative;
+  float: right;
+  right: 115px;
+  top: 1.1rem;
+}
+
+.conect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.2rem;
+}
+
+.conect img {
+  padding-left: 0.7rem;
+  height: 2rem;
+}
+
+form button {
+  width: 25%;
+  padding: 10px;
+  border-radius: 3px;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  transition: 1s;
+  margin: 8px;
+}
+
+form button:hover {
+  background-color: rgba(0, 0, 0, 0.74);
+}
+
+form i {
+  position: absolute;
+  left: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+form h5 {
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: black;
+}
+
+form a {
+  text-decoration: none;
+}
+
+form .input-block input[type="text"],
+input[type="password"] {
+  padding-left: 25px;
+}
+
+::-webkit-input-placeholder {
+  color: black;
+}
+
+footer {
+  position: absolute;
+}
+
+.alert-success {
+  width: 80%;
+  text-align: center;
+  background-color: rgba(0, 128, 0, 0.233);
+  color: green;
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 5px;
+  position: relative;
+  bottom: 1.8rem;
+}
+
+.alert-error {
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: white;
+  font-weight: bolder;
+  width: 80%;
+  padding: 1rem;
+  border-radius: 5px;
+  position: relative;
+  bottom: 1.8rem;
+}
+
+@media only screen and (min-device-width: 260px) and (max-device-width: 640px) {
+  footer {
+    position: absolute;
+  }
+  .box-password {
+    position: relative;
+    right: 90px;
+  }
+}
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) {
+  .box-password {
+    position: relative;
+    right: 100px;
+  }
+
+}
+
+@media (min-width: 535px){
+  .input-block,
+  form .button-block,
+  .box-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .input-block label {
+    margin-top: 10px;
+  }
+
+  .box-password {
+    position: relative;
+    right: 20px;
+    top: 5px;
+    border: 1px solid red;
+    width: 0;
+    height: 0;
+  }
+
+  .box-password label img {
+    cursor: pointer;
+  }
+
+  .input-block input {
+    width: 30%;
+    margin: 5px;
+  }
+
+  form i {
+    position: relative;
+    left: 27px;
+    margin-bottom: 10px;
+  }
+
+  form .button-block button {
+    width: 10%;
+  }
+
+  .alert-error,
+  .alert-success {
+    width: 50%;
+    position: relative;
+    bottom: 25px;
+    left: 30px;
+    margin: 0 auto;
+  }
+}

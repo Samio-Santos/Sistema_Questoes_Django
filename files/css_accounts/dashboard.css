@@ -1,0 +1,255 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: whitesmoke;
+}
+
+header {
+  width: 100%;
+  position: fixed;
+  padding: 5px;
+  top: 0;
+  z-index: 1;
+  background-color: black;
+  font-family: sans-serif;
+}
+
+header .container-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header .container-header h1 {
+  display: none;
+}
+
+header img {
+  height: 35px;
+  margin: 5px;
+}
+
+.sidepanel {
+  width: 0;
+  position: fixed;
+  height: 100%;
+  left: 0;
+  top: 55px;
+  background-color: #1d1c1c;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  z-index: 1;
+}
+
+.sidepanel a {
+  padding: 8px 8px 8px 20px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+
+.sidepanel .box-container h1 {
+  margin-left: 5px;
+  margin-bottom: 5px;
+  color: white;
+  font-weight: bolder;
+}
+
+.sidepanel .box-container a {
+  margin-top: 0.5rem;
+}
+
+.sidepanel .logout {
+  margin-top: 80px;
+}
+
+.sidepanel .box-container img,
+.logout img {
+  height: 24px;
+}
+
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+/* Conteudo */
+main {
+  font-family: sans-serif;
+  margin-top: 5rem;
+}
+
+section {
+  margin-left: 10%;
+}
+
+section .container-result,
+section .container-user {
+  display: block;
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+  background-color: rgba(177, 174, 174, 0.664);
+}
+
+section .container-user .perfil img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+section .container-user .perfil a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: grey;
+  font-weight: bold;
+}
+
+section .container-user .perfil span {
+  position: relative;
+  bottom: 2.7rem;
+  font-size: 20px;
+}
+
+section .container-user .perfil p {
+  position: relative;
+  bottom: 0.5rem;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+section .container-result .questions {
+  display: block;
+  text-align: center;
+}
+
+section .container-result .questions img {
+  height: 40px;
+  margin-top: 0.5rem;
+}
+
+section .container-result .questions span {
+  font-size: 30px;
+  color: black;
+  font-weight: bold;
+}
+
+section .container-result .questions p {
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+aside .graphic {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 2rem;
+}
+
+/* Rodape */
+footer {
+  position: relative;
+  bottom: 0;
+  padding: 27px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+}
+
+@media (min-width: 800px) {
+  .container-header #menu-hamburgue,
+  .sidepanel .closebtn {
+    display: none;
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas: "header nav" ". main" ". footer";
+    font-family: sans-serif;
+  }
+
+  header {
+    width: 100%;
+    background-color: black;
+    position: inherit;
+    padding: 10px;
+    grid-area: nav;
+  }
+
+  header .container-header h1 {
+    display: inherit;
+    color: white;
+    font-size: 18px;
+    margin-left: 10px;
+  }
+
+  .sidepanel {
+    width: 20%;
+    top: 0;
+  }
+
+  .sidepanel .box-container a {
+    margin-top: 18px;
+  }
+
+  .sidepanel .box-container a:hover,
+  .sidepanel .logout a:hover {
+    background-color: rgba(64, 224, 208, 0.466);
+  }
+
+  main {
+    margin-top: 1rem;
+    grid-area: main;
+  }
+
+  section .container-result {
+    width: 30%;
+    margin: 0 auto;
+    display: inline-block;
+  }
+
+  main aside .graphic {
+    width: 30%;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  footer {
+    grid-area: footer;
+  }
+}

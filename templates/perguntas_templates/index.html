@@ -1,0 +1,134 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css_perguntas/index.css' %}" />
+    <title>Perguntas</title>
+  </head>
+  <body>
+    <main>
+      <section>
+        {% if perguntas %}
+          {% for pergunta in perguntas %}
+            <div class="box-title">
+                <small>Questão_ID{{ pergunta.id}}</small>
+                <span>{{pergunta.materia}}</span>
+            </div>
+            <form action="#" method="POST" id="question-form{{pergunta.id}}">
+              {% csrf_token %}
+              <input type="hidden" name="questao" value="{{pergunta.id}}">
+              <div class="question-box">
+                {{pergunta.enunciado}}
+              </div>
+              <div class="container-resp">
+                <input type="radio" 
+                    name="resp"
+                    id="certo{{pergunta.id}}"
+                    value="Certo"
+                    onchange="enableButton('{{pergunta.id}}')"
+                    />
+                <label for="certo{{pergunta.id}}">Certo</label
+                >
+              </div>
+              <div class="container-resp">
+                <input
+                    type="radio"
+                    name="resp"
+                    id="errado{{pergunta.id}}"
+                    value="Errado"
+                    onchange="enableButton('{{pergunta.id}}')"
+
+                  />
+                <label for="errado{{pergunta.id}}">Errado</label
+                >
+              </div>
+              <!-- ################################### -->
+                <div class="container-resp">
+                  <input type="hidden" id="alternativas_correta{{pergunta.id}}" value="{{pergunta.alternativas_correta}}">
+                  <div class="mensagem{{pergunta.id}}"></div>
+                </div>
+              <!-- ################################### -->
+
+              {% if resposta %}
+                {% for respostas in resposta %}
+                  {% if respostas.resposta_pergunta == pergunta %}
+                    {% if respostas.resposta_certa == pergunta.alternativas_correta %}
+                      <div class="container-resp">
+                      <input type="hidden" name="id_resposta" value="{{respostas.respondida}}">
+                        <div>
+                          <img
+                            src="{% static 'img/verificacao-verde.png' %}"
+                            alt="Resposta-correta"
+                          />
+                          <span class="right">Parabéns! Você acertou!</span>
+                        </div>
+                      </div>
+                    {% else %}
+                      <div class="container-resp">
+                      <input type="hidden" name="id_resposta" value="{{respostas.respondida}}">
+                        <div>
+                          <img
+                            src="{% static 'img/verificacao-vermelho.png' %}"
+                            alt="Resposta-errada"
+                          />
+                          <span class="error">Você errou! <b>Resposta: {{pergunta.alternativas_correta}}</b></span>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+              <button type="submit" class="button{{pergunta.id}}" title="Marque uma opção para ativar o botão" disabled onclick="x('{{pergunta.id}}')">Responder</button>
+            </form>
+          {% endfor %}
+        {% endif %}
+      </section>
+      <ul class="pagination">
+        {% if perguntas.has_previous %}
+          <li>
+            <a id="next" href="?p=1">&laquo;</a>
+          </li>
+
+          <li>
+            <a id="next" href="?p={{ perguntas.previous_page_number }}">&lsaquo;</a>
+          </li>
+        {% endif %}
+      
+        {% for paginas in perguntas.paginator.page_range %}
+          {% if perguntas.number == paginas %}
+            <li>
+              <a
+                class="active"
+                href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+            </li>
+
+          {% elif paginas > perguntas.number|add:'-3' and paginas < perguntas.number|add:'3' %}
+            <li>
+              <a href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+            </li>
+
+          {% endif %} 
+        {% endfor %}
+
+        {% if posts.has_next %}
+          <li>
+            <a id="next" href="?p={{ perguntas.next_page_number }}">&rsaquo;</a>
+          </li>
+
+          <li>
+            <a id="next" href="?p={{ perguntas.paginator.num_pages }}">&raquo;</a>
+          </li>
+        {% endif %}
+      </ul>
+    </main>
+
+    <footer>
+      <p>&copy; | Desenvolvido por Samio Santos</p>
+    </footer>
+    
+    <script src="{% static 'scripts/script.js' %}"></script>
+  </body>
+</html>

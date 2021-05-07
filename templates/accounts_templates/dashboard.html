@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css_accounts/dashboard.css' %}" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <header>
+      <div class="container-header">
+        <h1>Área do usuário</h1>
+        <img src="{% static 'img/logo.png' %}" alt="logo" />
+        <img
+          src="{% static 'img/botao-de-menu.png' %}"
+          id="menu-hamburgue"
+          alt="menu"
+          onclick="openNav()"
+        />
+      </div>
+    </header>
+    <nav id="mySidepanel" class="sidepanel">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <div class="box-container">
+        <h1>Materias</h1>
+        <hr />
+        <a href="#"
+          >Português<img
+            src="{% static 'img/livros-educativos.png' %}"
+            alt="português"
+        /></a>
+        <a href="#"
+          >Informática<img
+            src="{% static 'img/informatica.png' %}"
+            alt="informatica"
+        /></a>
+        <a href="#"
+          >Lógica<img
+            src="{% static 'img/pensamento-logico.png' %}"
+            alt="logica"
+        /></a>
+        <a href="#"
+          >Estátisca<img
+            src="{% static 'img/estatisticas.png' %}"
+            alt="estatisca"
+        /></a>
+        <a href="#"
+          >Direito<img
+            src="{% static 'img/balanca-de-peso.png' %}"
+            alt="direito"
+        /></a>
+        <a href="#"
+          >Contabilidade<img
+            src="{% static 'img/contabilidade.png' %}"
+            alt="contabilidade"
+        /></a>
+      </div>
+
+      <div class="logout">
+        <a href="{% url 'logout' %}"
+          >Sair<img src="{% static 'img/logout.png' %}" alt="logout"
+        /></a>
+      </div>
+    </nav>
+
+    <main id="content">
+      <section>
+        <div class="container-user">
+          <div class="perfil">
+            <img src="{% static 'img/foto-eu.jpg' %}" alt="foto-perfil" />
+            <a href="#"><span>Editar Perfil</span></a>
+            <p>Samio Santos</p>
+          </div>
+        </div>
+        <div class="container-result">
+          <div class="questions">
+            <img
+              src="{% static 'img/verificacao-preto.png' %}"
+              alt="circulo-preto"
+            /><br /><br />
+            <span>100</span>
+            <p>Questões Resolvidas</p>
+          </div>
+        </div>
+        <div class="container-result">
+          <div class="questions">
+            <img
+              src="{% static 'img/verificacao-verde.png' %}"
+              alt="circulo-preto"
+            /><br /><br />
+            <span style="color: green">40</span>
+            <p style="color: green">Respostas Corretas</p>
+          </div>
+        </div>
+
+        <div class="container-result">
+          <div class="questions">
+            <img
+              src="{% static 'img/verificacao-vermelho.png' %}"
+              alt="circulo-preto"
+            /><br /><br />
+            <span style="color: red">60</span>
+            <p style="color: red">Respostas Erradas</p>
+          </div>
+        </div>
+      </section>
+      <aside>
+        <div class="graphic">
+          <canvas id="myChart"></canvas>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <p>&copy; | Desenvolvido por Samio Santos</p>
+    </footer>
+    <script src="{% static 'scripts/script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          datasets: [
+            {
+              data: [60, 40],
+              backgroundColor: ["red", "green"],
+              hoverOffset: 4,
+              label: "Label",
+            },
+          ],
+          labels: ["Erros", "Acertos"],
+        },
+        options: {
+          responsive: true,
+          animation: {
+            animateScale: true,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

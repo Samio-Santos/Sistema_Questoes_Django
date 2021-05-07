@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- <link rel="icon" href="{% static 'img/blog.png' %}"> -->
+    <link rel="stylesheet" href="{% static 'css_accounts/menu.css' %}" />
+    <link rel="stylesheet" href="{% static 'css_accounts/login.css' %}" />
+
+    <link
+      href="{% static 'fontawesome-free-5.13.0-web/css/fontawesome.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'fontawesome-free-5.13.0-web/css/brands.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'fontawesome-free-5.13.0-web/css/solid.css' %}"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+          <h1>Login</h1>
+          <img id="icone-login" src="{% static 'img/user.png' %}" alt="Login" />
+      </div>
+    </header>
+    <main>
+      {% if not user.is_authenticated %}
+      <form action="{% url 'login' %}" method="POST" name="form-login">
+        {% csrf_token %}
+        <fieldset>
+          <div class="box-login">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="{{ message.tags }}" role="alert">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+            <div class="input-block">
+              <label for="user">Login:</label><br />
+              <i class="fas fa-user-circle"></i>
+              <input type="text" name="user" value="{{request.POST.user}}" id="user" placeholder="Email" required />
+            </div>
+            
+            <div class="input-block">
+              <label for="psw">Senha:</label><br />
+              <i id="senha" class="fas fa-lock"></i>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                maxlength="45"
+                placeholder="Password"
+                required
+              />
+
+              <div class="box-password">
+                <input id="showPassword" type="checkbox" style="display: none;">
+                <label for="showPassword">
+                  <img src="{% static 'img/mostrar.png' %}" alt="MostraSenha" onclick="mostraSenha()">
+                </label>
+              </div>
+              
+            </div>
+
+            <div class="input-block">
+              <a href="{% url 'register' %}">Cadastra-se</a>
+            </div>
+
+            <div class="input-block">
+              <a href="{% url 'reset_password' %}">Esqueceu a senha</a>
+            </div>
+          </div>
+        </fieldset>
+        
+        <div class="button-block">
+          <button type="submit">Entrar</button>
+        </div>
+
+        <h5>Conecte-se com:</h5>
+        <div class="conect">
+          <!-- <a href="{% url 'social:begin' 'facebook' %}">
+            <img src="{% static 'img/facebook.png' %}" alt="login-facebook">
+          </a> -->
+
+          <a href="{% url 'social:begin' 'github' %}">
+            <img src="{% static 'img/github.png' %}" alt="login-github">
+          </a>
+
+          <a href="{% url 'social:begin' 'google-oauth2' %}">
+            <img src="{% static 'img/google.png' %}" alt="login-google">
+          </a>
+        </div>
+      </form>
+      
+      {% else %}
+
+      <div class="container-logado">
+        <p>
+          Você já está logado com usuário <span>{{ user }}</span>
+          <a href="{% url 'logout' %}">clique aqui</a>
+          para sair.
+        </p>
+      </div>
+
+      {% endif %}
+    </main>
+    
+    <footer>
+      <p>&copy; | Desenvolvido por Samio Santos</p>
+    </footer>
+
+  <script src="{% static 'scripts/script.js' %}"></script>
+  </body>
+</html>
