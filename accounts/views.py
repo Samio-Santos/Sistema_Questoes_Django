@@ -4,6 +4,7 @@ from django.core.validators import validate_email
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .models import CostumerUser
+from categorias.models import Materia
 
 
 def login(request):

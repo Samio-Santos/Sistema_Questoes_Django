@@ -3,7 +3,14 @@ from categorias.models import Materia, Banca
 
 class Pergunta(models.Model):
     enunciado = models.TextField()
-    # alternativas = JSONField(blank=True, null=True)
+    alternativas_Multiplasescolhas = models.JSONField(
+    default={
+        "A": " ", 
+        "B": " ", 
+        "C": " ",
+        "D": " ", 
+        "E": " "
+    }, blank=True, null=True)
     alternativas_correta = models.CharField(max_length=10, 
     choices=[
         ('A', 'A'),

@@ -35,6 +35,7 @@ header img {
 
 .sidepanel {
   width: 0;
+  font-family: sans-serif;
   position: fixed;
   height: 100%;
   left: 0;

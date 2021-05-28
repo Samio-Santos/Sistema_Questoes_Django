@@ -1,0 +1,152 @@
+{% load static %}
+{% if pergunta.banca.banca == "Cespe/Cebraspe"%}
+    <div class="box-title">
+        <small>{{ forloop.counter0|add:perguntas.start_index}} - Questão_ID{{ pergunta.id}}</small>
+        <span>{{pergunta.materia}}</span>
+    </div>
+    <form action="#Resposta$Enviada#" method="POST" id="question-form{{pergunta.id}}">
+        {% csrf_token %}
+        <input type="hidden" name="questao" id="id_pergunta" value="{{pergunta.id}}">
+        <input type="hidden" id="alternativas_correta{{pergunta.id}}" value="{{pergunta.alternativas_correta}}">
+        <input type="hidden" name="banca" id="banca{{pergunta.id}}" value="{{pergunta.banca}}">
+        
+        <div class="question-box">
+            {{pergunta.enunciado|safe}}
+        </div>
+
+        <div class="container-resp">
+            <input type="radio" 
+                name="resp"
+                id="certo{{pergunta.id}}"
+                class="radio"
+                value="Certo"
+                onchange="enableButton('{{pergunta.id}}')"
+                />
+            <label for="certo{{pergunta.id}}">Certo</label
+            >
+        </div>
+        <div class="container-resp">
+            <input
+                type="radio"
+                name="resp"
+                class="radio"
+                id="errado{{pergunta.id}}"
+                value="Errado"
+                onchange="enableButton('{{pergunta.id}}')"
+
+            />
+            <label for="errado{{pergunta.id}}">Errado</label
+            >
+        </div>
+        <div class="container-resp">
+            <div class="mensagem{{pergunta.id}}"></div>
+        </div>
+
+        {% if resposta %}
+            {% for respostas in resposta %}
+                {% if respostas.resposta_pergunta == pergunta %}
+                    {% if respostas.resposta_usuario == pergunta.alternativas_correta %}
+                        <div class="container-resp">
+                            <input type="hidden" name="id_resposta" id="id_resposta{{pergunta.id}}" value="{{respostas.respondida}}">
+                            <input type="hidden" id="resposta_usuario{{pergunta.id}}" value="{{respostas.resposta_usuario}}">
+                            <input type="hidden" id="banca{{pergunta.id}}" value="{{respostas.resposta_pergunta.banca}}">
+                            <div>
+                            <img
+                                src="{% static 'img/verificacao-verde.png' %}"
+                                alt="Resposta-correta"
+                            />
+                            <span class="right">Parabéns! Você acertou!</span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="container-resp">
+                            <input type="hidden" name="id_resposta" id="id_resposta{{pergunta.id}}" value="{{respostas.respondida}}">
+                            <input type="hidden" id="resposta_usuario{{pergunta.id}}" value="{{respostas.resposta_usuario}}">
+                            <input type="hidden" id="banca{{pergunta.id}}" value="{{respostas.resposta_pergunta.banca}}">
+
+                            <div>
+                            <img
+                                src="{% static 'img/verificacao-vermelho.png' %}"
+                                alt="Resposta-errada"
+                            />
+                            <span class="error">Você errou! <b>Resposta:  {{pergunta.alternativas_correta}}</b></span>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <button type="submit" class="button{{pergunta.id}}" title="Marque uma opção para ativar o botão" disabled onclick="resp_ajax('{{pergunta.id}}')">Responder</button>
+    </form>
+    
+{% elif pergunta.banca.banca == "Vunesp" %}
+    <div class="box-title">
+        <small>{{ forloop.counter0|add:perguntas.start_index}} - Questão_ID{{ pergunta.id}}</small>
+        <span>{{pergunta.materia}}</span>
+    </div>
+    <form action="#Resposta$Enviada#" method="POST" id="question-form{{pergunta.id}}">
+        {% csrf_token %}
+        <input type="hidden" name="questao" id="id_pergunta" value="{{pergunta.id}}">
+        <input type="hidden" id="alternativas_correta{{pergunta.id}}" value="{{pergunta.alternativas_correta}}">
+        <input type="hidden" name="banca" id="banca{{pergunta.id}}" value="{{pergunta.banca}}">
+
+        <div class="question-box">
+            {{pergunta.enunciado|safe}}
+        </div> 
+
+        {% for key, value in pergunta.alternativas_Multiplasescolhas.items %}
+            <div class="container-resp">
+                <input
+                type="radio"
+                name="resp"
+                class="radio"
+                id="{{key}}{{pergunta.id}}"
+                value="{{key}}"
+                onchange="enableButton('{{pergunta.id}}')"
+            />
+            <label for="{{key}}{{pergunta.id}}">{{key}}- {{value}}</label
+            >
+            </div>
+        {% endfor %}
+        
+        <div class="container-resp">
+            <div class="mensagem{{pergunta.id}}"></div>
+        </div>
+
+        {% if resposta %}
+            {% for respostas in resposta %}
+                {% if respostas.resposta_pergunta == pergunta %}
+                    {% if respostas.resposta_usuario == pergunta.alternativas_correta %}
+                        <div class="container-resp">
+                            <input type="hidden" name="id_resposta" id="id_resposta{{pergunta.id}}" value="{{respostas.respondida}}">
+                            <input type="hidden" id="resposta_usuario{{pergunta.id}}" value="{{respostas.resposta_usuario}}">
+                            <input type="hidden" id="banca{{pergunta.id}}" value="{{respostas.resposta_pergunta.banca}}">
+                            <div>
+                            <img
+                                src="{% static 'img/verificacao-verde.png' %}"
+                                alt="Resposta-correta"
+                            />
+                            <span class="right">Parabéns! Você acertou!</span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="container-resp">
+                            <input type="hidden" name="id_resposta" id="id_resposta{{pergunta.id}}" value="{{respostas.respondida}}">
+                            <input type="hidden" id="resposta_usuario{{pergunta.id}}" value="{{respostas.resposta_usuario}}">
+                            <input type="hidden" id="banca{{pergunta.id}}" value="{{respostas.resposta_pergunta.banca}}">
+
+                            <div>
+                            <img
+                                src="{% static 'img/verificacao-vermelho.png' %}"
+                                alt="Resposta-errada"
+                            />
+                            <span class="error">Você errou! <b>Resposta letra: {{pergunta.alternativas_correta}}</b></span>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <button type="submit" class="button{{pergunta.id}}" title="Marque uma opção para ativar o botão" disabled onclick="resp_ajax('{{pergunta.id}}')">Responder</button>
+    </form>
+{% endif %}

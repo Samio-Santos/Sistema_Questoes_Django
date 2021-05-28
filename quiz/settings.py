@@ -227,3 +227,7 @@ EMAIL_HOST_USER = EMAIL
 EMAIL_HOST_PASSWORD = PASSWORD
 EMAIL_TIMEOUT = 60
 DEFAULT_FROM_EMAIL = 'Simulados team'
+
+# Configuração Django-Summernote
+INSTALLED_APPS += ('django_summernote',)
+X_FRAME_OPTIONS = 'SAMEORIGIN'

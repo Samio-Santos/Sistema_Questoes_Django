@@ -1,0 +1,79 @@
+<div class="filters_category">
+  <h3>Minhas Questões:</h3>
+  {% if materia == 'Português' %}
+    <a href="{% url 'categoria_materia' 'Português' %}">
+      Todas questões de {{materia}}
+    </a>
+
+    <a href="{% url 'resolvidas' 'Português' %}">
+      Resolvidas
+    </a>
+
+    <a href="{% url 'nao_resolvidas' 'Português' %}">
+      Não Resolvidas
+    </a>
+
+  {% elif materia == 'Informática' %}
+    <a href="{% url 'categoria_materia' 'Informática' %}">
+      Todas questões de {{materia}}
+    </a>
+
+    <a href="{% url 'resolvidas' 'Informática' %}">
+      Resolvidas
+    </a>
+
+    <a href="{% url 'nao_resolvidas' 'Informática' %}">
+      Não Resolvidas
+    </a>
+
+    {% elif materia == 'Lógica' %}
+      <a href="{% url 'categoria_materia' 'Lógica' %}">
+        Todas questões de {{materia}}
+      </a>
+
+      <a href="{% url 'resolvidas' 'Lógica' %}">
+        Resolvidas
+      </a>
+      
+      <a href="{% url 'nao_resolvidas' 'Lógica' %}">
+        Não Resolvidas
+      </a>
+    {% elif materia == 'Estatística' %}
+      <a href="{% url 'categoria_materia' 'Estatística' %}">
+        Todas questões de {{materia}}
+      </a>
+
+      <a href="{% url 'resolvidas' 'Estatística' %}">
+        Resolvidas
+      </a>
+      
+      <a href="{% url 'nao_resolvidas' 'Estatística' %}">
+        Não Resolvidas
+      </a>
+
+    {% elif materia == 'Direito' %}
+      <a href="{% url 'categoria_materia' 'Direito' %}">
+        Todas questões de {{materia}}
+      </a>
+
+      <a href="{% url 'resolvidas' 'Direito' %}">
+        Resolvidas
+      </a>
+      
+      <a href="{% url 'nao_resolvidas' 'Direito' %}">
+        Não Resolvidas
+      </a>
+    {% elif materia == 'Contabilidade' %}
+      <a href="{% url 'categoria_materia' 'Contabilidade' %}">
+        Todas questões de {{materia}}
+      </a>
+
+      <a href="{% url 'resolvidas' 'Contabilidade' %}">
+        Resolvidas
+      </a>
+      
+      <a href="{% url 'nao_resolvidas' 'Contabilidade' %}">
+        Não Resolvidas
+      </a>
+  {% endif %}
+</div>

@@ -1,0 +1,202 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css_perguntas/index.css' %}" />
+    <title>Perguntas</title>
+  </head>
+  <body>
+    <header>
+      <div class="container-header">
+        <a href="{% url 'dashboard' %}">
+          <h1>Questões resolvidas - {{materia}}</h1>
+        </a>
+        <img src="{% static 'img/logo.png' %}" alt="logo" />
+      </div>
+    </header>
+    <main>
+      <section>
+        {% if resolvidas %}
+          {% include 'perguntas_templates/filtros_questoes.html' %}
+
+          {% for resolvida in resolvidas %}
+            {% if resolvida.banca == "Cespe/Cebraspe" %}
+              <div class="box-title">
+                <small>{{ forloop.counter0|add:resolvidas.start_index}} - Questão_ID{{resolvida.resposta_pergunta.id}}</small>
+                  <span>{{resolvida.resposta_pergunta.materia}}</span>
+              </div>
+              <form action="#Questões$Resolvidas#" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="questao" id="id_pergunta" value="{{resolvida.resposta_pergunta.id}}">
+                <input type="hidden" name="banca" id="banca{{resolvida.resposta_pergunta.id}}" value="{{resolvida.banca}}">
+
+                
+                <div class="question-box">
+                  {{resolvida.resposta_pergunta|safe}}
+                </div>
+                <div class="container-resp">
+                  <input type="radio" 
+                      name="resp"
+                      id="certo{{resolvida.resposta_pergunta.id}}"
+                      class="radio"
+                      value="Certo"
+                      />
+                  <label for="certo{{resolvida.resposta_pergunta.id}}">Certo</label
+                  >
+                </div>
+                <div class="container-resp">
+                  <input
+                      type="radio"
+                      name="resp"
+                      class="radio"
+                      id="errado{{resolvida.resposta_pergunta.id}}"
+                      value="Errado"
+                    />
+                  <label for="errado{{resolvida.resposta_pergunta.id}}">Errado</label
+                  >
+                </div>
+
+                {% for pergunta in perguntas %}
+                  {% if resolvida.resposta_pergunta == pergunta %}
+                    {% if resolvida.resposta_usuario == pergunta.alternativas_correta %}
+                      <div class="container-resp">
+                        <input type="hidden" name="id_resposta" id="id_resposta{{resolvida.resposta_pergunta.id}}" value="{{resolvida.respondida}}">
+                        <input type="hidden" id="resposta_usuario{{pergunta.id}}" value="{{resolvida.resposta_usuario}}">
+                        <div>
+                          <img
+                            src="{% static 'img/verificacao-verde.png' %}"
+                            alt="Resposta-correta"
+                          />
+                          <span class="right">Parabéns! Você acertou!</span>
+                        </div>
+                      </div>
+                    {% else %}
+                      <div class="container-resp">
+                        <input type="hidden" name="id_resposta" id="id_resposta{{resolvida.resposta_pergunta.id}}" value="{{resolvida.respondida}}">
+                        <input type="hidden" id="resposta_usuario{{pergunta.id}}" value="{{resolvida.resposta_usuario}}">
+                        <div>
+                          <img
+                            src="{% static 'img/verificacao-vermelho.png' %}"
+                            alt="Resposta-errada"
+                          />
+                          <span class="error">Você errou! <b>Resposta: {{pergunta.alternativas_correta}}</b></span>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                <button type="submit" disabled>Responder</button>
+              </form>
+            {% elif resolvida.banca == "Vunesp" %}
+              <div class="box-title">
+                <small>{{ forloop.counter0|add:resolvidas.start_index}} - Questão_ID{{resolvida.resposta_pergunta.id}}}</small>
+                  <span>{{resolvida.resposta_pergunta.materia}}</span>
+              </div>
+              <form action="#Questões$Resolvidas#" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="questao" id="id_pergunta" value="{{resolvida.resposta_pergunta.id}}">
+                <input type="hidden" name="banca" id="banca{{resolvida.resposta_pergunta.id}}" value="{{resolvida.banca}}">
+
+                <div class="question-box">
+                  {{resolvida.resposta_pergunta|safe}}
+                </div>
+                {% for key, value in resolvida.resposta_pergunta.alternativas_Multiplasescolhas.items %}
+                  <div class="container-resp">
+                      <input
+                      type="radio"
+                      name="resp"
+                      class="radio"
+                      id="{{key}}{{resolvida.resposta_pergunta.id}}"
+                      value="{{key}}"
+                  />
+                  <label for="{{key}}{{resolvida.resposta_pergunta.id}}">{{key}}- {{value}}</label
+                  >
+                  </div>
+                {% endfor %}
+
+                {% for pergunta in perguntas %}
+                  {% if resolvida.resposta_pergunta == pergunta %}
+                    {% if resolvida.resposta_usuario == pergunta.alternativas_correta %}
+                      <div class="container-resp">
+                        <input type="hidden" name="id_resposta" id="id_resposta{{resolvida.resposta_pergunta.id}}" value="{{resolvida.respondida}}">
+                        <input type="hidden" id="resposta_usuario{{pergunta.id}}" value="{{resolvida.resposta_usuario}}">
+                        <div>
+                          <img
+                            src="{% static 'img/verificacao-verde.png' %}"
+                            alt="Resposta-correta"
+                          />
+                          <span class="right">Parabéns! Você acertou!</span>
+                        </div>
+                      </div>
+                    {% else %}
+                      <div class="container-resp">
+                        <input type="hidden" name="id_resposta" id="id_resposta{{resolvida.resposta_pergunta.id}}" value="{{resolvida.respondida}}">
+                        <input type="hidden" id="resposta_usuario{{pergunta.id}}" value="{{resolvida.resposta_usuario}}">
+                        <div>
+                          <img
+                            src="{% static 'img/verificacao-vermelho.png' %}"
+                            alt="Resposta-errada"
+                          />
+                          <span class="error">Você errou! <b>Resposta letra: {{pergunta.alternativas_correta}}</b></span>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                <button type="submit" disabled>Responder</button>
+              </form>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p>Nem uma pergunta desta matéria respondida!</p>
+        {% endif %}
+      </section>
+    </main>
+    <ul class="pagination">
+      {% if resolvidas.has_previous %}
+        <li>
+          <a id="next" href="?p=1">&laquo;</a>
+        </li>
+
+        <li>
+          <a id="next" href="?p={{ perguntas.previous_page_number }}">&lsaquo;</a>
+        </li>
+      {% endif %}
+    
+      {% for paginas in resolvidas.paginator.page_range %}
+        {% if resolvidas.number == paginas %}
+          <li>
+            <a
+              class="active"
+              href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+          </li>
+
+        {% elif paginas > resolvidas.number|add:'-3' and paginas < resolvidas.number|add:'3' %}
+          <li>
+            <a href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+          </li>
+
+        {% endif %} 
+      {% endfor %}
+
+      {% if resolvidas.has_next %}
+        <li>
+          <a id="next" href="?p={{ perguntas.next_page_number }}">&rsaquo;</a>
+        </li>
+
+        <li>
+          <a id="next" href="?p={{ perguntas.paginator.num_pages }}">&raquo;</a>
+        </li>
+      {% endif %}
+    </ul>
+
+    <footer>
+      <p>&copy; | Desenvolvido por Samio Santos</p>
+    </footer>
+    
+    <script src="{% static 'scripts/script.js' %}"></script>
+  </body>
+</html>

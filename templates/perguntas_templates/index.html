@@ -9,80 +9,21 @@
     <title>Perguntas</title>
   </head>
   <body>
+    <header>
+      <div class="container-header">
+        <a href="{% url 'dashboard' %}">
+          <h1>Área de questões - {{materia}}</h1>
+        </a>
+        <img src="{% static 'img/logo.png' %}" alt="logo" />
+      </div>
+    </header>
     <main>
       <section>
         {% if perguntas %}
+          {% include 'perguntas_templates/filtros_questoes.html' %}
+
           {% for pergunta in perguntas %}
-            <div class="box-title">
-                <small>Questão_ID{{ pergunta.id}}</small>
-                <span>{{pergunta.materia}}</span>
-            </div>
-            <form action="#" method="POST" id="question-form{{pergunta.id}}">
-              {% csrf_token %}
-              <input type="hidden" name="questao" value="{{pergunta.id}}">
-              <div class="question-box">
-                {{pergunta.enunciado}}
-              </div>
-              <div class="container-resp">
-                <input type="radio" 
-                    name="resp"
-                    id="certo{{pergunta.id}}"
-                    value="Certo"
-                    onchange="enableButton('{{pergunta.id}}')"
-                    />
-                <label for="certo{{pergunta.id}}">Certo</label
-                >
-              </div>
-              <div class="container-resp">
-                <input
-                    type="radio"
-                    name="resp"
-                    id="errado{{pergunta.id}}"
-                    value="Errado"
-                    onchange="enableButton('{{pergunta.id}}')"
-
-                  />
-                <label for="errado{{pergunta.id}}">Errado</label
-                >
-              </div>
-              <!-- ################################### -->
-                <div class="container-resp">
-                  <input type="hidden" id="alternativas_correta{{pergunta.id}}" value="{{pergunta.alternativas_correta}}">
-                  <div class="mensagem{{pergunta.id}}"></div>
-                </div>
-              <!-- ################################### -->
-
-              {% if resposta %}
-                {% for respostas in resposta %}
-                  {% if respostas.resposta_pergunta == pergunta %}
-                    {% if respostas.resposta_certa == pergunta.alternativas_correta %}
-                      <div class="container-resp">
-                      <input type="hidden" name="id_resposta" value="{{respostas.respondida}}">
-                        <div>
-                          <img
-                            src="{% static 'img/verificacao-verde.png' %}"
-                            alt="Resposta-correta"
-                          />
-                          <span class="right">Parabéns! Você acertou!</span>
-                        </div>
-                      </div>
-                    {% else %}
-                      <div class="container-resp">
-                      <input type="hidden" name="id_resposta" value="{{respostas.respondida}}">
-                        <div>
-                          <img
-                            src="{% static 'img/verificacao-vermelho.png' %}"
-                            alt="Resposta-errada"
-                          />
-                          <span class="error">Você errou! <b>Resposta: {{pergunta.alternativas_correta}}</b></span>
-                        </div>
-                      </div>
-                    {% endif %}
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-              <button type="submit" class="button{{pergunta.id}}" title="Marque uma opção para ativar o botão" disabled onclick="x('{{pergunta.id}}')">Responder</button>
-            </form>
+            {% include 'perguntas_templates/filtros_por_banca.html' %}
           {% endfor %}
         {% endif %}
       </section>
@@ -113,7 +54,7 @@
           {% endif %} 
         {% endfor %}
 
-        {% if posts.has_next %}
+        {% if perguntas.has_next %}
           <li>
             <a id="next" href="?p={{ perguntas.next_page_number }}">&rsaquo;</a>
           </li>

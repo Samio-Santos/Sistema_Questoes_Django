@@ -1,0 +1,77 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css_perguntas/index.css' %}" />
+    <title>Perguntas</title>
+  </head>
+  <body>
+    <header>
+      <div class="container-header">
+        <a href="{% url 'dashboard' %}">
+          <h1>Questões não resolvidas - {{materia}}</h1>
+        </a>
+        <img src="{% static 'img/logo.png' %}" alt="logo" />
+      </div>
+    </header>
+    <main>
+      <section>
+        {% if perguntas %}
+          {% include 'perguntas_templates/filtros_questoes.html' %}
+
+          {% for pergunta in perguntas %}
+            {% include 'perguntas_templates/filtros_por_banca.html' %}
+          {% endfor %}
+        {% else %}
+            <p>Todas as perguntas dessa matéria foram respondidas!</p>
+        {% endif %}
+      </section>
+      <ul class="pagination">
+        {% if perguntas.has_previous %}
+          <li>
+            <a id="next" href="?p=1">&laquo;</a>
+          </li>
+
+          <li>
+            <a id="next" href="?p={{ perguntas.previous_page_number }}">&lsaquo;</a>
+          </li>
+        {% endif %}
+      
+        {% for paginas in perguntas.paginator.page_range %}
+          {% if perguntas.number == paginas %}
+            <li>
+              <a
+                class="active"
+                href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+            </li>
+
+          {% elif paginas > perguntas.number|add:'-3' and paginas < perguntas.number|add:'3' %}
+            <li>
+              <a href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+            </li>
+
+          {% endif %} 
+        {% endfor %}
+
+        {% if perguntas.has_next %}
+          <li>
+            <a id="next" href="?p={{ perguntas.next_page_number }}">&rsaquo;</a>
+          </li>
+
+          <li>
+            <a id="next" href="?p={{ perguntas.paginator.num_pages }}">&raquo;</a>
+          </li>
+        {% endif %}
+      </ul>
+    </main>
+
+    <footer>
+      <p>&copy; | Desenvolvido por Samio Santos</p>
+    </footer>
+    
+    <script src="{% static 'scripts/script.js' %}"></script>
+  </body>
+</html>
