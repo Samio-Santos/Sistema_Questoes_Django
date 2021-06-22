@@ -9,6 +9,15 @@
         <input type="hidden" name="questao" id="id_pergunta" value="{{pergunta.id}}">
         <input type="hidden" id="alternativas_correta{{pergunta.id}}" value="{{pergunta.alternativas_correta}}">
         <input type="hidden" name="banca" id="banca{{pergunta.id}}" value="{{pergunta.banca}}">
+
+        {% if pergunta.texto %}
+            <div class="container-text">
+                <b id="verText{{pergunta.id}}" onclick="mostratexto('text{{pergunta.id}}', 'verText{{pergunta.id}}')">Texto associado +</b>
+                <div id="text{{pergunta.id}}" style="display: none;">
+                    {{pergunta.texto|safe}}
+                </div>
+            </div>
+        {% endif %}
         
         <div class="question-box">
             {{pergunta.enunciado|safe}}
@@ -90,12 +99,21 @@
         <input type="hidden" id="alternativas_correta{{pergunta.id}}" value="{{pergunta.alternativas_correta}}">
         <input type="hidden" name="banca" id="banca{{pergunta.id}}" value="{{pergunta.banca}}">
 
+        {% if pergunta.texto %}
+            <div class="container-text">
+                <b id="verText{{pergunta.id}}" onclick="mostratexto('text{{pergunta.id}}', 'verText{{pergunta.id}}')">Texto associado +</b>
+                <div id="text{{pergunta.id}}" style="display: none;">
+                    {{pergunta.texto|safe}}
+                </div>
+            </div>
+        {% endif %}
+
         <div class="question-box">
             {{pergunta.enunciado|safe}}
         </div> 
 
         {% for key, value in pergunta.alternativas_Multiplasescolhas.items %}
-            <div class="container-resp">
+            <div class="container-vunesp">
                 <input
                 type="radio"
                 name="resp"
@@ -104,7 +122,7 @@
                 value="{{key}}"
                 onchange="enableButton('{{pergunta.id}}')"
             />
-            <label for="{{key}}{{pergunta.id}}">{{key}}- {{value}}</label
+            <label for="{{key}}{{pergunta.id}}">{{key}} - {{value}}</label
             >
             </div>
         {% endfor %}

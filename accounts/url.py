@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import login, logout, locked, register, dashboard, Reset_Password_Complete
 from django.contrib.auth import views as auth_views
 from accounts.form import EmailValidationPassword
+from .views import login, logout, locked, register, dashboard, Reset_Password_Complete, perfil_usuario
 
 
 urlpatterns = [
@@ -9,7 +9,7 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('dashboard/', dashboard, name='dashboard'),
     path('logout/', logout , name='logout'),
-    # path('perfil/<int:id>/', perfil_usuario, name='perfil_user'),
+    path('perfil/<int:id>/', perfil_usuario, name='perfil_user'),
     path('locked/', locked , name='locked'),
 
     path('reset_password/', 

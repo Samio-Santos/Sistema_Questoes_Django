@@ -1,8 +1,7 @@
 <div class="filters_category">
-  <h3>Minhas Questões:</h3>
   {% if materia == 'Português' %}
     <a href="{% url 'categoria_materia' 'Português' %}">
-      Todas questões de {{materia}}
+      Todas as questões de {{materia}}
     </a>
 
     <a href="{% url 'resolvidas' 'Português' %}">
@@ -15,7 +14,7 @@
 
   {% elif materia == 'Informática' %}
     <a href="{% url 'categoria_materia' 'Informática' %}">
-      Todas questões de {{materia}}
+      Todas as questões de {{materia}}
     </a>
 
     <a href="{% url 'resolvidas' 'Informática' %}">
@@ -28,7 +27,7 @@
 
     {% elif materia == 'Lógica' %}
       <a href="{% url 'categoria_materia' 'Lógica' %}">
-        Todas questões de {{materia}}
+        Todas as questões de {{materia}}
       </a>
 
       <a href="{% url 'resolvidas' 'Lógica' %}">
@@ -40,7 +39,7 @@
       </a>
     {% elif materia == 'Estatística' %}
       <a href="{% url 'categoria_materia' 'Estatística' %}">
-        Todas questões de {{materia}}
+        Todas as questões de {{materia}}
       </a>
 
       <a href="{% url 'resolvidas' 'Estatística' %}">
@@ -53,7 +52,7 @@
 
     {% elif materia == 'Direito' %}
       <a href="{% url 'categoria_materia' 'Direito' %}">
-        Todas questões de {{materia}}
+        Todas as questões de {{materia}}
       </a>
 
       <a href="{% url 'resolvidas' 'Direito' %}">
@@ -65,7 +64,7 @@
       </a>
     {% elif materia == 'Contabilidade' %}
       <a href="{% url 'categoria_materia' 'Contabilidade' %}">
-        Todas questões de {{materia}}
+        Todas as questões de {{materia}}
       </a>
 
       <a href="{% url 'resolvidas' 'Contabilidade' %}">
@@ -75,5 +74,20 @@
       <a href="{% url 'nao_resolvidas' 'Contabilidade' %}">
         Não Resolvidas
       </a>
+
+      {% elif materia == 'Criminologia' %}
+      <a href="{% url 'categoria_materia' 'Criminologia' %}">
+        Todas as questões de {{materia}}
+      </a>
+
+      <a href="{% url 'resolvidas' 'Criminologia' %}">
+        Resolvidas
+      </a>
+      
+      <a href="{% url 'nao_resolvidas' 'Criminologia' %}">
+        Não Resolvidas
+      </a>
   {% endif %}
 </div>
+
+<i class="count">Total de questões encontradas: {{count}}</i>

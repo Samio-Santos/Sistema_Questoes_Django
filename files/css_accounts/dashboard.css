@@ -69,12 +69,31 @@ header img {
   font-weight: bolder;
 }
 
+.sidepanel .box-container #myInput {
+  box-sizing: border-box;
+  background-image: url("../img/search.png");
+  background-size: 25px;
+  background-position: 8px 10px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sidepanel .box-container #myInput:focus {
+  outline: 3px solid #ddd;
+}
+
 .sidepanel .box-container a {
   margin-top: 0.5rem;
 }
 
 .sidepanel .logout {
-  margin-top: 80px;
+  margin-top: 70px;
+  margin-bottom: 70px;
 }
 
 .sidepanel .box-container img,
@@ -87,6 +106,27 @@ header img {
   top: 0;
   right: 25px;
   font-size: 36px;
+}
+
+/* Personalização do scroll do container .sidepanel */
+/* width */
+.sidepanel::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.sidepanel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.sidepanel::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.sidepanel::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .openbtn {
@@ -113,6 +153,7 @@ section {
 }
 
 section .container-result,
+section .container-delete,
 section .container-user {
   display: block;
   width: 90%;
@@ -149,7 +190,8 @@ section .container-user .perfil p {
   font-weight: bold;
 }
 
-section .container-result .questions {
+section .container-result .questions,
+section .container-delete .box-delete {
   display: block;
   text-align: center;
 }
@@ -165,21 +207,162 @@ section .container-result .questions span {
   font-weight: bold;
 }
 
-section .container-result .questions p {
-  font-size: 20px;
+section .container-result .questions p,
+section .container-delete .box-delete p {
+  font-size: 17px;
   color: black;
   font-weight: bold;
   margin-top: 1rem;
 }
 
-aside .graphic {
+section .container-delete .box-delete .button1 {
+  background-color: transparent;
+  color: black;
+  font-size: 18px;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
   width: 100%;
+  opacity: 0.9;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+aside .graphic {
+  width: 300px;
+  margin: 0 auto;
   padding: 10px;
+  margin-bottom: 3rem;
+}
+
+aside,
+aside #myChart {
   margin-bottom: 2rem;
 }
 
+/* Set a style for all buttons */
+aside .graphic .button2 {
+  display: none;
+  background-color: black;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  font-weight: bold;
+}
+
+aside .graphic .button2:hover {
+  opacity: 3;
+}
+
+/* delete button */
+.deletebtn:disabled {
+  background-color: #f4433688;
+}
+
+.deletebtn {
+  background-color: #f44336;
+  font-weight: bold;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  font-weight: bold;
+}
+
+.deletebtn:not([disabled]):hover {
+  opacity: 1;
+}
+
+/* contêiner */
+.container h1 {
+  font-size: 18px;
+  text-align: center;
+  border-bottom: 1px solid grey;
+  padding: 10px;
+  margin-bottom: 1rem;
+}
+
+.container p {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.container .frase {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.container input {
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto 15% auto;
+  border: 1px solid #888;
+  padding: 50px;
+  width: 90%;
+}
+
+/* O botão Fechar modal (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 90px;
+  font-size: 40px;
+  font-weight: bold;
+  color: grey;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+  align-items: center;
+  justify-content: space-around;
+}
+
 /* Rodape */
-footer {
+.footer {
   position: relative;
   bottom: 0;
   padding: 27px;
@@ -191,7 +374,28 @@ footer {
   text-align: center;
 }
 
-@media (min-width: 800px) {
+/* Estilização para mensagem de "bem-vindo" e entre outras */
+.alert-success {
+  text-align: center;
+  font-weight: bolder;
+  background-color: rgba(0, 128, 0, 0.233);
+  color: green;
+  width: 90%;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn,
+  .deletebtn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 950px) {
   .container-header #menu-hamburgue,
   .sidepanel .closebtn {
     display: none;
@@ -233,6 +437,11 @@ footer {
     background-color: rgba(64, 224, 208, 0.466);
   }
 
+  .sidepanel .logout {
+    margin-top: 60px;
+    margin-bottom: 10px;
+  }
+
   main {
     margin-top: 1rem;
     grid-area: main;
@@ -244,13 +453,38 @@ footer {
     display: inline-block;
   }
 
-  main aside .graphic {
-    width: 30%;
+  section .container-delete {
+    display: none;
+  }
+
+  aside .graphic {
+    width: 300px;
     position: relative;
     margin: 0 auto;
   }
 
+  aside .graphic .button2 {
+    display: inherit;
+  }
+
+  .close {
+    position: absolute;
+    right: 25%;
+    top: 42px;
+  }
+
+  .modal-content {
+    margin: 3% auto;
+    width: 50%;
+  }
+
   footer {
     grid-area: footer;
+  }
+
+  .alert-success {
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
   }
 }

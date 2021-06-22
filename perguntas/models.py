@@ -2,6 +2,7 @@ from django.db import models
 from categorias.models import Materia, Banca
 
 class Pergunta(models.Model):
+    texto = models.TextField(blank=True, null=True)
     enunciado = models.TextField()
     alternativas_Multiplasescolhas = models.JSONField(
     default={
@@ -9,7 +10,7 @@ class Pergunta(models.Model):
         "B": " ", 
         "C": " ",
         "D": " ", 
-        "E": " "
+        "E": " ",
     }, blank=True, null=True)
     alternativas_correta = models.CharField(max_length=10, 
     choices=[
@@ -17,6 +18,7 @@ class Pergunta(models.Model):
         ('B', 'B'),
         ('C', 'C'),
         ('D', 'D'),
+        ('E', 'E'),
         ('Certo', 'Certo'),
         ('Errado', 'Errado')
     ])

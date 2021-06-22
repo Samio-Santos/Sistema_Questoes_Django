@@ -27,7 +27,7 @@ fieldset {
   font-weight: bolder;
 }
 
-.input-block input {
+.input-block input, .input-block select {
   padding: 10px;
   border: 1px solid black;
   border-radius: 4px;
@@ -35,7 +35,7 @@ fieldset {
   outline: none;
 }
 
-.input-block input:focus {
+.input-block input:focus, .input-block select:focus {
   border: 1.5px solid black;
 }
 
@@ -120,7 +120,7 @@ form button:hover {
     margin-top: 20px;
   }
 
-  .input-block input {
+  .input-block input, .input-block select{
     width: 65%;
   }
 
@@ -134,7 +134,7 @@ form button:hover {
   }
 
   #Valid-password {
-    width: 56%;
+    width: 58%;
     margin-left: 150px;
   }
 }

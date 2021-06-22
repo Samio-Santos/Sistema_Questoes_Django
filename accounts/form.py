@@ -1,5 +1,12 @@
 from django.contrib.auth.views import PasswordResetForm
 from django.contrib.auth import get_user_model
+from .models import CostumerUser
+from django.forms import ModelForm
+
+class Userform(ModelForm):
+    class Meta:
+        model = CostumerUser
+        fields = ('first_name', 'last_name', 'email', 'sexo', 'biografia', 'imagem')
 
 class EmailValidationPassword(PasswordResetForm):
     def clean_email(self):

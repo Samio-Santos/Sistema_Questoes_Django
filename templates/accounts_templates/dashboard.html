@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css_accounts/dashboard.css' %}" />
+    <link rel="stylesheet" href="{% static 'css_accounts/animations.css' %}" />
     <title>Dashboard</title>
   </head>
   <body>
@@ -23,9 +24,15 @@
     </header>
     <nav id="mySidepanel" class="sidepanel">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-      <div class="box-container">
-        <h1>Materias</h1>
+      <div class="box-container" id="box-container">
+        <h1>Matérias</h1>
         <hr />
+        <input
+          type="text"
+          placeholder="Pesquisar matéria..."
+          id="myInput"
+          onkeyup="filterFunction()"
+        />
         <a href="{% url 'categoria_materia' 'Português' %}"
           >Português<img
             src="{% static 'img/livros-educativos.png' %}"
@@ -41,7 +48,7 @@
             src="{% static 'img/pensamento-logico.png' %}"
             alt="logica"
         /></a>
-        <a href="{% url 'categoria_materia' 'Estatistica' %}"
+        <a href="{% url 'categoria_materia' 'Estatística' %}"
           >Estatística<img
             src="{% static 'img/estatisticas.png' %}"
             alt="estatisca"
@@ -56,6 +63,11 @@
             src="{% static 'img/contabilidade.png' %}"
             alt="contabilidade"
         /></a>
+        <a href="{% url 'categoria_materia' 'Criminologia' %}"
+          >Criminologia<img
+            src="{% static 'img/criminologia.png' %}"
+            alt="contabilidade"
+        /></a>
       </div>
 
       <div class="logout">
@@ -66,12 +78,35 @@
     </nav>
 
     <main id="content">
-      <section>
+      <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+      <section class="secao" style="display: none">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="{{ message.tags }}" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
         <div class="container-user">
           <div class="perfil">
-            <img src="{% static 'img/foto-eu.jpg' %}" alt="foto-perfil" />
-            <a href="#"><span>Editar Perfil</span></a>
-            <p>Samio Santos</p>
+            {% if user.imagem %}
+              <img src="{% static 'img/foto-eu.jpg' %}" alt="foto-perfil" />
+            {% else %}
+              {% if user.sexo == "Masculino" %}
+                <img src="{% static 'img/avatar_masculino.jpg' %}" alt="foto-perfil" />
+              
+              {% elif user.sexo == "Feminino" %}
+                <img src="{% static 'img/avatar_feminino.jpg' %}" alt="foto-perfil" />
+              {% endif %}
+            {% endif %}
+            <a href="{% url 'perfil_user' user.id %}"><span>Editar Perfil</span></a>
+            <p>{{user.first_name}} {{user.last_name}}</p>
           </div>
         </div>
         <div class="container-result">
@@ -80,7 +115,7 @@
               src="{% static 'img/verificacao-preto.png' %}"
               alt="circulo-preto"
             /><br /><br />
-            <span>100</span>
+            <span>{{total_respostas}}</span>
             <p>Questões Resolvidas</p>
           </div>
         </div>
@@ -90,7 +125,7 @@
               src="{% static 'img/verificacao-verde.png' %}"
               alt="circulo-preto"
             /><br /><br />
-            <span style="color: green">40</span>
+            <span style="color: green">{{respostas_certas}}</span>
             <p style="color: green">Respostas Corretas</p>
           </div>
         </div>
@@ -101,45 +136,134 @@
               src="{% static 'img/verificacao-vermelho.png' %}"
               alt="circulo-preto"
             /><br /><br />
-            <span style="color: red">60</span>
+            <span style="color: red">{{respostas_erradas}}</span>
             <p style="color: red">Respostas Erradas</p>
           </div>
         </div>
+
+        <div class="container-delete">
+          <div class="box-delete">
+            <button
+              class="button1"
+              onclick="document.getElementById('id01').style.display='block'"
+            >
+              Zerar questões resolvidas
+            </button>
+          </div>
+        </div>
       </section>
-      <aside>
+      <aside class="aside" style="display: none">
         <div class="graphic">
+          <input
+            type="hidden"
+            id="respostas_certas"
+            value="{{respostas_certas}}"
+          />
+          <input
+            type="hidden"
+            id="respostas_erradas"
+            value="{{respostas_erradas}}"
+          />
           <canvas id="myChart"></canvas>
+          <button
+            class="button2"
+            onclick="document.getElementById('id01').style.display='block'"
+          >
+            Zerar questões resolvidas
+          </button>
+        </div>
+
+        <div id="id01" class="modal">
+          <span
+            class="close"
+            title="Fechar"
+            onclick="document.getElementById('id01').style.display='none'"
+            >×</span
+          >
+          <form
+            class="modal-content"
+            method="POST"
+            action="{% url 'deletar_questoes_resolvidas' %}"
+          >
+            {% csrf_token %}
+
+            <div class="container">
+              <h1>
+                Todas as estatísticas e histórico de questões respondidas serão
+                apagados.
+              </h1>
+              <p>
+                Essa ação não poderá ser revertida! Para prosseguir com essa
+                ação, digite a seguinte frase para confirmar:
+              </p>
+              <p class="frase">Desejo zerar minhas estatísticas</p>
+              <input type="text" id="frase" placeholder="Digite a frase aqui" />
+
+              <div class="clearfix">
+                <button
+                  type="submit"
+                  class="deletebtn"
+                  name="delete"
+                  value="Deletar"
+                  disabled
+                  onclick="document.getElementById('id01').style.display='none'"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </aside>
     </main>
 
-    <footer>
+    <footer class="footer" style="display: none">
       <p>&copy; | Desenvolvido por Samio Santos</p>
     </footer>
     <script src="{% static 'scripts/script.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
       var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          datasets: [
-            {
-              data: [60, 40],
-              backgroundColor: ["red", "green"],
-              hoverOffset: 4,
-              label: "Label",
-            },
-          ],
-          labels: ["Erros", "Acertos"],
-        },
-        options: {
-          responsive: true,
-          animation: {
-            animateScale: true,
+      var respostas_certas = document.getElementById("respostas_certas").value;
+      var respostas_erradas =
+        document.getElementById("respostas_erradas").value;
+      if (respostas_certas == 0 && respostas_erradas == 0) {
+        var myChart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            datasets: [
+              {
+                data: [1],
+                backgroundColor: ["black"],
+                hoverOffset: 4,
+                label: "Label",
+              },
+            ],
+            labels: ["Nem uma questão respondida"],
           },
-        },
-      });
+        });
+      } else {
+        var myChart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            datasets: [
+              {
+                data: [respostas_certas, respostas_erradas],
+                backgroundColor: ["green", "red"],
+                hoverOffset: 4,
+                label: "Label",
+              },
+            ],
+            labels: ["Acertos", "Erros"],
+          },
+          options: {
+            responsive: true,
+            animation: {
+              animateScale: true,
+            },
+          },
+        });
+      }
     </script>
   </body>
 </html>

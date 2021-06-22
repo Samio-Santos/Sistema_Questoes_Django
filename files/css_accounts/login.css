@@ -54,7 +54,7 @@ fieldset {
 }
 
 .input-block input {
-  width: 80%;
+  width: 100%;
   outline: none;
   padding: 9px;
   border-radius: 3px;
@@ -70,7 +70,7 @@ fieldset {
   height: 0;
   position: relative;
   float: right;
-  right: 115px;
+  right: 25px;
   top: 1.1rem;
 }
 
@@ -95,7 +95,7 @@ form button {
   color: white;
   cursor: pointer;
   transition: 1s;
-  margin: 8px;
+  margin-left: 18px;
 }
 
 form button:hover {
@@ -159,16 +159,17 @@ footer {
   footer {
     position: absolute;
   }
+
   .box-password {
     position: relative;
-    right: 90px;
+    right: 25px;
   }
 }
 
 @media only screen and (min-device-width: 414px) and (max-device-width: 736px) {
   .box-password {
     position: relative;
-    right: 100px;
+    right: 25px;
   }
 
 }
@@ -212,6 +213,13 @@ footer {
 
   form .button-block button {
     width: 10%;
+    margin-right: 20px;
+    margin-bottom: 20px;
+
+  }
+
+  footer {
+    position: absolute;
   }
 
   .alert-error,

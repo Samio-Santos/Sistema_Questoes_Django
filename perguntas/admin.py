@@ -8,6 +8,6 @@ class PerguntaAdmin(SummernoteModelAdmin):
     'disponivel')
     list_editable = ('disponivel',)
     list_display_links = ('id', 'enunciado',)
-    summernote_fields = 'enunciado', 'alternativas_Multiplasescolhas'
+    summernote_fields = 'texto', 'enunciado', 'alternativas_Multiplasescolhas'
 
 admin.site.register(Pergunta, PerguntaAdmin)

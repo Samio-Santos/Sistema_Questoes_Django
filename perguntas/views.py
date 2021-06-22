@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -18,9 +18,13 @@ def perguntas(request, materia):
         disponivel=True
     )
     
+
     respostas = Resposta.objects.filter(
         usuario=user
     )
+
+    # Conta o total de questões que a matéria possui
+    count = pergunta.count()
 
     # Pegar a resposta do usuário
     resposta_usuario = request.POST.get('resp')
@@ -58,6 +62,7 @@ def perguntas(request, materia):
     pergunta = paginator.get_page(page)
 
     data['perguntas'] = pergunta
+    data['count'] = count
     data['resposta'] = respostas
     data['materia'] = materia
     return render(request, 'perguntas_templates/index.html', data)
@@ -78,6 +83,9 @@ def questoes_resolvidas(request, materia):
         respondida=True
         
     )
+
+    # Conta o total de questões resolvidas da materia
+    count = resolvidas.count()
     
     # Paginação
     paginator = Paginator(resolvidas, 4)
@@ -86,6 +94,7 @@ def questoes_resolvidas(request, materia):
 
     data['resolvidas'] = resolvidas
     data['perguntas'] = pergunta
+    data['count'] = count
     data['materia'] = materia
     return render(request, 'perguntas_templates/questoes_resolvidas.html', data)
 
@@ -112,7 +121,7 @@ def questoes_nao_resolvidas(request, materia):
         resposta_pergunta=pergunta
         ).exists()
 
-        # Verifica se a questão foi respondida pelo usuário
+        # Verifica se a questão foi resolvida pelo usuário
         # Se não resolvidas, então a questão é adicionada na lista e exibida no template
         if not questoes_resolvidas:
             lista.append(pergunta)
@@ -120,6 +129,9 @@ def questoes_nao_resolvidas(request, materia):
     # Pegar a resposta do usuário
     resposta_usuario = request.POST.get('resp')
     banca = request.POST.get('banca')
+
+    # Conta o total de questões não resolvidas da materia
+    count = len(lista)
 
     if request.method == 'POST':
         # Identificador da pergunta vinda do template
@@ -155,5 +167,16 @@ def questoes_nao_resolvidas(request, materia):
 
     data['perguntas'] = lista
     data['resposta'] = resposta
+    data['count'] = count
     data['materia'] = materia
     return render(request, 'perguntas_templates/questoes_nao_resolvidas.html', data)
+
+# Zera as questoes resolvidas pelo usuario
+def deletar_questoes(request):
+    user = request.user
+    delete = request.POST.get('delete')
+
+    if delete == "Deletar":
+        Resposta.objects.filter(usuario=user).delete()
+        messages.success(request, f'Suas estatísticas foram zeradas com sucesso!')
+        return redirect('dashboard')

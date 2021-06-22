@@ -113,9 +113,8 @@ function enableButton(id_pergunta) {
   document.querySelector(`.button${id_pergunta}`).style.cursor = "pointer";
 }
 
-// Na pasta template, PERGUNTAS_TEMPLATES, index.html
-// Se a pergunta tiver respondida, então treicho de codigo abaixo impede que o usuário responda a questão novamente
-
+// Na pasta template/PERGUNTAS_TEMPLATES/index.html
+// Se a pergunta tiver respondida, então trecho de codigo abaixo impede que o usuário responda a questão novamente
 document.querySelectorAll("#id_pergunta").forEach((id_pergunta) => {
   id = id_pergunta.value;
   questoes_respondidas = document.getElementById(`id_resposta${id}`);
@@ -147,7 +146,6 @@ document.querySelectorAll("#id_pergunta").forEach((id_pergunta) => {
       c = document.querySelector(`#C${id}`);
       d = document.querySelector(`#D${id}`);
       e = document.querySelector(`#E${id}`);
-
       resposta_usuario = document.querySelector(`#resposta_usuario${id}`);
       if (resposta_usuario.value == "A") {
         a.checked = true;
@@ -173,20 +171,19 @@ document.querySelectorAll("#id_pergunta").forEach((id_pergunta) => {
         c.disabled = true;
         d.checked = true;
         e.disabled = true;
+      } else if (resposta_usuario.value == "E") {
+        a.disabled = true;
+        b.disabled = true;
+        c.disabled = true;
+        d.disabled = true;
+        e.checked = true;
       }
-    } else if (resposta_usuario.value == "E") {
-      a.disabled = true;
-      b.disabled = true;
-      c.disabled = true;
-      d.disabled = true;
-      e.checked = true;
     }
   }
 });
 
 // Funciobalidade com Ajax e Django
 // Quando o usuario responder uma questão este código irá excultar
-
 function resp_ajax(id_pergunta) {
   if (document.querySelector(`#question-form${id_pergunta}`)) {
     let form = document.querySelector(`#question-form${id_pergunta}`);
@@ -209,27 +206,82 @@ function resp_ajax(id_pergunta) {
             if (radio.checked && banca.value == "Cespe/Cebraspe") {
               if (radio.value == alternativa_correta) {
                 mensagem.innerHTML = `
+                  <div class="sk-circle">
+                    <div class="sk-circle1 sk-child"></div>
+                    <div class="sk-circle2 sk-child"></div>
+                    <div class="sk-circle3 sk-child"></div>
+                    <div class="sk-circle4 sk-child"></div>
+                    <div class="sk-circle5 sk-child"></div>
+                    <div class="sk-circle6 sk-child"></div>
+                    <div class="sk-circle7 sk-child"></div>
+                    <div class="sk-circle8 sk-child"></div>
+                    <div class="sk-circle9 sk-child"></div>
+                    <div class="sk-circle10 sk-child"></div>
+                    <div class="sk-circle11 sk-child"></div>
+                    <div class="sk-circle12 sk-child"></div>
+                  </div>
+                `;
+
+                setTimeout(function () {
+                  mensagem.innerHTML = `
                     <img src="/static/img/verificacao-verde.png" alt="Resposta-correta" />
-                    <span class="right">Parabéns! Você acertou!</span>
-                  `;
+                    <span class="right">Parabéns! Você acertou!</span>`;
+                }, 1000);
+
                 document.querySelector(`.button${id_pergunta}`).disabled = true;
                 document.querySelector(`#certo${id_pergunta}`).disabled = true;
                 document.querySelector(`#errado${id_pergunta}`).disabled = true;
               } else {
                 mensagem.innerHTML = `
-                      <img src="/static/img/verificacao-vermelho.png" alt="Resposta-correta" />
-                      <span class="error">Você errou! <b>Resposta:${alternativa_correta}</b></span> 
-                    `;
+                  <div class="sk-circle">
+                    <div class="sk-circle1 sk-child"></div>
+                    <div class="sk-circle2 sk-child"></div>
+                    <div class="sk-circle3 sk-child"></div>
+                    <div class="sk-circle4 sk-child"></div>
+                    <div class="sk-circle5 sk-child"></div>
+                    <div class="sk-circle6 sk-child"></div>
+                    <div class="sk-circle7 sk-child"></div>
+                    <div class="sk-circle8 sk-child"></div>
+                    <div class="sk-circle9 sk-child"></div>
+                    <div class="sk-circle10 sk-child"></div>
+                    <div class="sk-circle11 sk-child"></div>
+                    <div class="sk-circle12 sk-child"></div>
+                  </div>
+                `;
+                setTimeout(function () {
+                  mensagem.innerHTML = `
+                    <img src="/static/img/verificacao-vermelho.png" alt="Resposta-correta" />
+                    <span class="error">Você errou! <b>Resposta: ${alternativa_correta}</b></span>`;
+                }, 1000);
+
                 document.querySelector(`.button${id_pergunta}`).disabled = true;
                 document.querySelector(`#certo${id_pergunta}`).disabled = true;
                 document.querySelector(`#errado${id_pergunta}`).disabled = true;
               }
             } else if (radio.checked && banca.value == "Vunesp") {
-              if (radio.value == alternativa_correta) {
+                if (radio.value == alternativa_correta) {
                 mensagem.innerHTML = `
-                      <img src="/static/img/verificacao-verde.png" alt="Resposta-correta" />
-                      <span class="right">Parabéns! Você acertou!</span>
-                    `;
+                  <div class="sk-circle">
+                    <div class="sk-circle1 sk-child"></div>
+                    <div class="sk-circle2 sk-child"></div>
+                    <div class="sk-circle3 sk-child"></div>
+                    <div class="sk-circle4 sk-child"></div>
+                    <div class="sk-circle5 sk-child"></div>
+                    <div class="sk-circle6 sk-child"></div>
+                    <div class="sk-circle7 sk-child"></div>
+                    <div class="sk-circle8 sk-child"></div>
+                    <div class="sk-circle9 sk-child"></div>
+                    <div class="sk-circle10 sk-child"></div>
+                    <div class="sk-circle11 sk-child"></div>
+                    <div class="sk-circle12 sk-child"></div>
+                  </div>
+                `;
+                setTimeout(function () {
+                  mensagem.innerHTML = `
+                    <img src="/static/img/verificacao-verde.png" alt="Resposta-correta" />
+                    <span class="right">Parabéns! Você acertou!</span>`;
+                }, 1000);
+
                 document.querySelector(`.button${id_pergunta}`).disabled = true;
                 document.querySelector(`#A${id_pergunta}`).disabled = true;
                 document.querySelector(`#B${id_pergunta}`).disabled = true;
@@ -238,9 +290,27 @@ function resp_ajax(id_pergunta) {
                 document.querySelector(`#E${id_pergunta}`).disabled = true;
               } else {
                 mensagem.innerHTML = `
+                  <div class="sk-circle">
+                    <div class="sk-circle1 sk-child"></div>
+                    <div class="sk-circle2 sk-child"></div>
+                    <div class="sk-circle3 sk-child"></div>
+                    <div class="sk-circle4 sk-child"></div>
+                    <div class="sk-circle5 sk-child"></div>
+                    <div class="sk-circle6 sk-child"></div>
+                    <div class="sk-circle7 sk-child"></div>
+                    <div class="sk-circle8 sk-child"></div>
+                    <div class="sk-circle9 sk-child"></div>
+                    <div class="sk-circle10 sk-child"></div>
+                    <div class="sk-circle11 sk-child"></div>
+                    <div class="sk-circle12 sk-child"></div>
+                  </div>
+                `;
+                setTimeout(function () {
+                  mensagem.innerHTML = `
                     <img src="/static/img/verificacao-vermelho.png" alt="Resposta-correta" />
-                    <span class="error">Você errou! <b>Resposta:${alternativa_correta}</b></span> 
-                    `;
+                    <span class="error">Você errou! <b>Resposta: ${alternativa_correta}</b></span>`;
+                }, 1000);
+
                 document.querySelector(`.button${id_pergunta}`).disabled = true;
                 document.querySelector(`#A${id_pergunta}`).disabled = true;
                 document.querySelector(`#B${id_pergunta}`).disabled = true;
@@ -255,5 +325,80 @@ function resp_ajax(id_pergunta) {
       ajax.send(data);
     }
     form.addEventListener("submit", sendForm, false);
+  }
+}
+
+// Função para pesquisar uma matéria no dashboard
+function filterFunction() {
+  var input, filter, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("box-container");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+      a.innerText = "Samy";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+
+// Codigo para pre-loader no Dashboard
+if (document.querySelector(".spinner")) {
+  var loader = setInterval(function () {
+    clearInterval(loader);
+    document.querySelector(".spinner").style.display = "none";
+    document.querySelector(".secao").style.display = "inherit";
+    document.querySelector(".aside").style.display = "inherit";
+    document.querySelector(".footer").style.display = "inherit";
+  }, 3000);
+}
+
+// Codigo para pre-loader nas perguntas
+if (document.querySelector(".sk-circle")) {
+  var loader = setInterval(function () {
+    clearInterval(loader);
+    document.querySelector(".sk-circle").style.display = "none";
+  }, 800);
+}
+
+// Quando o usuário clicar em qualquer lugar fora do modal, feche-o
+var modal = document.getElementById("id01");
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+// Script para o botão "zera questões resolvidas"
+// Enquanto o usuario não digitar a frase corretamente o botão para deletar ficará desabilitado
+frase = document.getElementById("frase");
+if (frase) {
+  frase.onkeyup = function () {
+    if (frase.value === "Desejo zerar minhas estatísticas") {
+      document.querySelector(".deletebtn").disabled = false;
+    } else {
+      document.querySelector(".deletebtn").disabled = true;
+    }
+  };
+}
+
+function mostratexto(text, vertext) {
+  var container = document.getElementById(text);
+  var vertext = document.getElementById(vertext)
+  
+  if (container.style.display === "none") {
+    container.style.display = "block";
+    vertext.textContent = "Texto associado -"
+
+    
+  } else {
+    container.style.display = "none";
+    vertext.textContent = "Texto associado +"
+
   }
 }

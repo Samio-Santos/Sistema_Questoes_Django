@@ -5,8 +5,21 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css_perguntas/index.css' %}" />
     <title>Perguntas</title>
+    <link rel="stylesheet" href="{% static 'css_perguntas/index.css' %}" />
+    <link rel="stylesheet" href="{% static 'css_perguntas/animations.css' %}" />
+    <link
+      href="{% static 'fontawesome-free-5.13.0-web/css/fontawesome.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'fontawesome-free-5.13.0-web/css/brands.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'fontawesome-free-5.13.0-web/css/solid.css' %}"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header>
@@ -26,46 +39,53 @@
             {% include 'perguntas_templates/filtros_por_banca.html' %}
           {% endfor %}
         {% else %}
-            <p>Todas as perguntas dessa matéria foram respondidas!</p>
+          <div class="information">
+            <div>
+              <p><i class="fas fa-info-circle" title="Todas as perguntas foram respondidas"></i>Todas as perguntas dessa matéria foram respondidas!</p>
+              {% include 'perguntas_templates/filtros_questoes.html' %}
+            </div>
+          </div>
         {% endif %}
       </section>
-      <ul class="pagination">
-        {% if perguntas.has_previous %}
-          <li>
-            <a id="next" href="?p=1">&laquo;</a>
-          </li>
-
-          <li>
-            <a id="next" href="?p={{ perguntas.previous_page_number }}">&lsaquo;</a>
-          </li>
-        {% endif %}
-      
-        {% for paginas in perguntas.paginator.page_range %}
-          {% if perguntas.number == paginas %}
+      {% if perguntas %}
+        <ul class="pagination">
+          {% if perguntas.has_previous %}
             <li>
-              <a
-                class="active"
-                href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+              <a id="next" href="?p=1">&laquo;</a>
             </li>
 
-          {% elif paginas > perguntas.number|add:'-3' and paginas < perguntas.number|add:'3' %}
             <li>
-              <a href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+              <a id="next" href="?p={{ perguntas.previous_page_number }}">&lsaquo;</a>
+            </li>
+          {% endif %}
+        
+          {% for paginas in perguntas.paginator.page_range %}
+            {% if perguntas.number == paginas %}
+              <li>
+                <a
+                  class="active"
+                  href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+              </li>
+
+            {% elif paginas > perguntas.number|add:'-3' and paginas < perguntas.number|add:'3' %}
+              <li>
+                <a href="?p={{ paginas }}&termo={{ request.GET.termo }}">{{ paginas }}</a>
+              </li>
+
+            {% endif %} 
+          {% endfor %}
+
+          {% if perguntas.has_next %}
+            <li>
+              <a id="next" href="?p={{ perguntas.next_page_number }}">&rsaquo;</a>
             </li>
 
-          {% endif %} 
-        {% endfor %}
-
-        {% if perguntas.has_next %}
-          <li>
-            <a id="next" href="?p={{ perguntas.next_page_number }}">&rsaquo;</a>
-          </li>
-
-          <li>
-            <a id="next" href="?p={{ perguntas.paginator.num_pages }}">&raquo;</a>
-          </li>
-        {% endif %}
-      </ul>
+            <li>
+              <a id="next" href="?p={{ perguntas.paginator.num_pages }}">&raquo;</a>
+            </li>
+          {% endif %}
+        </ul>
+      {% endif %}
     </main>
 
     <footer>

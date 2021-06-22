@@ -43,9 +43,6 @@ header img {
 section {
   margin: 1rem;
 }
-section .filters_category h3 {
-  font-size: 20px;
-}
 
 section .filters_category a {
   display: block;
@@ -59,7 +56,12 @@ section .filters_category a {
   padding: 10px;
   cursor: pointer;
   margin-top: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+section .count {
+  font-weight: bold;
+  font-size: 16px;
 }
 
 section .box-title {
@@ -84,25 +86,48 @@ section .box-title span {
   border-radius: 3px;
   padding: 6px;
 }
+section form .container-text {
+  margin-top: 1rem;
+}
+
+section form .container-text b {
+  cursor: pointer;
+}
+
+section form .container-text div {
+  margin-top: 1rem;
+  text-align: justify;
+  line-height: 2;
+}
 
 section form .question-box {
+  font-family: Arial, Helvetica, sans-serif;
   text-align: justify;
   line-height: 2;
   word-wrap: break-word;
   margin-top: 0.5rem;
 }
 
-section form .container-resp {
+section form .container-resp,
+section form .container-vunesp {
   margin: 0.5rem;
   padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: justify;
 }
-section form .container-resp label {
+
+section form .container-resp label,
+section form .container-vunesp label {
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  padding-left: 20px;
+  margin-left: 25px;
   position: relative;
-  bottom: 1rem;
+  bottom: 1.1rem;
+}
+
+section form .container-vunesp label {
+  font-size: 16px;
 }
 
 section .container-resp img {
@@ -127,10 +152,10 @@ section .container-resp .error b {
 
 .radio {
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  border: 2px solid black;
+  border: 1.5px solid black;
   position: relative;
   display: flex;
   align-items: center;
@@ -140,8 +165,8 @@ section .container-resp .error b {
 .radio:before {
   content: "";
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background-color: blue;
   opacity: 0;
@@ -156,6 +181,27 @@ section .container-resp .error b {
   background-color: white;
   border: 2px solid rgba(0, 0, 0, 0.404);
   opacity: 0.5;
+}
+
+section .information {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 78vh;
+}
+
+section .information p {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: rgba(253, 253, 6, 0.651);
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+
+section .information .fa-info-circle {
+  position: relative;
+  right: .4rem;
 }
 
 section button:disabled {
@@ -183,7 +229,6 @@ section button:not([disabled]):hover {
 }
 
 /* Paginação */
-
 ul.pagination {
   display: inline-block;
   padding: 10px;
@@ -235,7 +280,6 @@ footer {
   text-align: center;
 }
 
-
 @media (min-width: 800px) {
   header .container-header h1 {
     font-size: 18px;
@@ -245,11 +289,19 @@ footer {
     width: 70%;
     margin: 0 auto;
     margin-top: 20px;
-
   }
 
   section .filters_category a {
     display: inline-block;
+  }
+
+  section .information {
+    height: 74vh;
+  }
+
+  section .information .fa-info-circle {
+    position: relative;
+    right: 5%;
   }
 
   section button {

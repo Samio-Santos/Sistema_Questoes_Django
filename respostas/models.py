@@ -1,9 +1,7 @@
-from categorias.models import Materia
 from django.db import models
 from perguntas.models import Pergunta
 from accounts.models import CostumerUser
 from django.utils import timezone
-from categorias.models import Banca
 
 class Resposta(models.Model):
     usuario = models.ForeignKey(CostumerUser, on_delete=models.CASCADE)
