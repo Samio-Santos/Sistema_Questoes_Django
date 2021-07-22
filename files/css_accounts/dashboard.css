@@ -232,7 +232,11 @@ aside .graphic {
   width: 300px;
   margin: 0 auto;
   padding: 10px;
-  margin-bottom: 3rem;
+}
+
+aside .graphic1 {
+  width: 100%;
+  margin: 0 auto;
 }
 
 aside,
@@ -241,21 +245,11 @@ aside #myChart {
 }
 
 /* Set a style for all buttons */
-aside .graphic .button2 {
+aside .graphic1 .button2 {
   display: none;
-  background-color: black;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-  font-weight: bold;
 }
 
-aside .graphic .button2:hover {
+aside .graphic1 .button2:hover {
   opacity: 3;
 }
 
@@ -463,8 +457,23 @@ aside .graphic .button2:hover {
     margin: 0 auto;
   }
 
-  aside .graphic .button2 {
+  aside .graphic1 {
+    width: 850px;
+  }
+
+  aside .graphic1 .button2 {
     display: inherit;
+    background-color: black;
+    color: white;
+    padding: 14px 20px;
+    margin: 0 auto;
+    margin-top: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 35%;
+    opacity: 0.9;
+    font-weight: bold;
   }
 
   .close {

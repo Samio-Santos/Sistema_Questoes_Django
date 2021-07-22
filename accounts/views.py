@@ -31,7 +31,8 @@ def login(request):
         else:
             auth.login(request, user)
             messages.success(request, f'Seja bem-vindo(a) {user.first_name} {user.last_name}!')
-            return redirect('dashboard')      
+            return redirect('dashboard')
+                
  
     except modelUser.DoesNotExist:
         messages.error(request, 'Usuário ou senha inválidos.')
@@ -109,10 +110,32 @@ def register(request):
 @login_required(redirect_field_name='#usu@rio$',login_url='login')
 def dashboard(request):
     data = {}
+    # listas para armazena as respostas certas e erradas de CADA materia 
+    # para exibir no gráfico estatistico de barra
+    portugues_certas = []
+    portugues_erradas = []
+    informatica_certas = []
+    informatica_erradas = []
+    logica_certas = []
+    logica_erradas = []
+    estatistica_certas = []
+    estatistica_erradas = []
+    direito_certas = []
+    direito_erradas = []
+    contabilidade_certas = []
+    contabilidade_erradas = []
+    criminologia_certas = []
+    criminologia_erradas = []
+
+    # listas para armazena o total de respostas certas e erradas
+    # para exibir no gráfico estatistico de roscar
     respostas_certas = []
     respostas_erradas = []
+    
+    # Mosta qual o usuario está logado no sistema
     user = request.user
 
+    # Conta o total de questões resolvidas pelo usuario
     total_respostas = Resposta.objects.filter(
         usuario=user
     ).count()
@@ -122,13 +145,73 @@ def dashboard(request):
             if pergunta == respondida.resposta_pergunta:
                 if pergunta.alternativas_correta == respondida.resposta_usuario:
                     respostas_certas.append(respondida)
+
+                    if respondida.materia == 'Português':
+                        portugues_certas.append(respondida)
+
+                    if respondida.materia == 'Informática':
+                        informatica_certas.append(respondida)
+
+                    if respondida.materia == 'Lógica':
+                        logica_certas.append(respondida)
+
+                    if respondida.materia == 'Estatística':
+                        estatistica_certas.append(respondida)
+
+                    if respondida.materia == 'Direito':
+                        direito_certas.append(respondida)
+                    
+                    if respondida.materia == 'Contabilidade':
+                        contabilidade_certas.append(respondida)
+                    
+                    if respondida.materia == 'Criminologia':
+                        criminologia_certas.append(respondida)
+                    
                 else:
                     respostas_erradas.append(respondida)
+
+                    if respondida.materia == 'Português':
+                        portugues_erradas.append(respondida)
+
+                    if respondida.materia == 'Informática':
+                        informatica_erradas.append(respondida)
+
+                    if respondida.materia == 'Lógica':
+                        logica_erradas.append(respondida)
+
+                    if respondida.materia == 'Estatística':
+                        estatistica_erradas.append(respondida)
+
+                    if respondida.materia == 'Direito':
+                        direito_erradas.append(respondida)
+                    
+                    if respondida.materia == 'Contabilidade':
+                        contabilidade_erradas.append(respondida)
+                    
+                    if respondida.materia == 'Criminologia':
+                        criminologia_erradas.append(respondida)
 
     data['total_respostas'] = total_respostas
     data['respostas_certas'] = len(respostas_certas)
     data['respostas_erradas'] = len(respostas_erradas)
+
+    data['portugues_certas'] = len(portugues_certas)
+    data['portugues_erradas'] = len(portugues_erradas)
+    data['informatica_certas'] = len(informatica_certas)
+    data['informatica_erradas'] = len(informatica_erradas)
+    data['logica_certas'] = len(logica_certas)
+    data['logica_erradas'] = len(logica_erradas)
+    data['estatistica_certas'] = len(estatistica_certas)
+    data['estatistica_erradas'] = len(estatistica_erradas)
+    data['direito_certas'] = len(direito_certas)
+    data['direito_erradas'] = len(direito_erradas)
+    data['contabilidade_certas'] = len(contabilidade_certas)
+    data['contabilidade_erradas'] = len(contabilidade_erradas)
+    data['criminologia_certas'] = len(criminologia_certas)
+    data['criminologia_erradas'] = len(criminologia_erradas)
+
     return render(request, 'accounts_templates/dashboard.html', data)
+
 
 def perfil_usuario(request, id):
     data = {}

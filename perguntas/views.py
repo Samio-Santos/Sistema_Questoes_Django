@@ -1,3 +1,4 @@
+from django.db import models
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -29,6 +30,7 @@ def perguntas(request, materia):
     # Pegar a resposta do usuário
     resposta_usuario = request.POST.get('resp')
     banca = request.POST.get('banca')
+    disciplina = request.POST.get('materia')
     if request.method == 'POST':
         print(resposta_usuario)
         # Identificador da pergunta vinda do template
@@ -43,6 +45,7 @@ def perguntas(request, materia):
                 model_resposta.resposta_pergunta = questao
                 model_resposta.usuario = user
                 model_resposta.resposta_usuario = resposta_usuario
+                model_resposta.materia = disciplina
                 model_resposta.banca = banca
                 model_resposta.respondida = True
                 
@@ -52,6 +55,7 @@ def perguntas(request, materia):
                 model_resposta.resposta_pergunta = questao
                 model_resposta.usuario = user
                 model_resposta.resposta_usuario = resposta_usuario
+                model_resposta.materia = disciplina
                 model_resposta.banca = banca
                 model_resposta.respondida = True
 
