@@ -167,6 +167,7 @@ section .container-user .perfil img {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
+  object-fit: fill;
 }
 
 section .container-user .perfil a {

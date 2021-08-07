@@ -67,6 +67,33 @@ form {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
+  object-fit: fill;
+}
+
+.input-block-img input[type="file"] {
+  display: none;
+}
+
+.input-block-img label {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  font-family: sans-serif;
+  border-radius: 5px;
+  padding: 8px 8px;
+  cursor: pointer;
+  position: relative;
+  transition: 1s;
+}
+
+.input-block-img label i {
+  position: relative;
+  right: 0.2rem;
+}
+
+.input-block-img label:hover {
+  background-color: rgba(0, 0, 0, 0.685);
 }
 
 .input-block label,
@@ -104,13 +131,13 @@ button {
   border-radius: 5px;
   outline: none;
   margin-bottom: 3rem;
-  transition: 0.5s;
+  transition: 1s;
   font-weight: bolder;
   margin-left: 1rem;
 }
 
 button:hover {
-  background-color: #ddd;
+  background-color: rgba(0, 0, 0, 0.685);
 }
 
 /* Alertas */
@@ -165,10 +192,15 @@ button:hover {
     margin: 0 auto;
   }
 
+  .input-block-img label {
+    padding: 8px 30px;
+    top: 1rem;
+  }
+
   .img-perfil {
     margin-top: 10px;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
   }
 

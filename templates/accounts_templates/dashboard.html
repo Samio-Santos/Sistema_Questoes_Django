@@ -4,10 +4,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Dashboard</title>
+    <link rel="icon" href="{% static 'img/universidade.png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css_accounts/dashboard.css' %}" />
     <link rel="stylesheet" href="{% static 'css_accounts/animations.css' %}" />
-    <title>Dashboard</title>
   </head>
   <body>
     <header>
@@ -96,7 +97,7 @@
         <div class="container-user">
           <div class="perfil">
             {% if user.imagem %}
-              <img src="{% static 'img/foto-eu.jpg' %}" alt="foto-perfil" />
+              <img src="{{user.imagem.url}}" alt="foto-perfil" />
             {% else %}
               {% if user.sexo == "Masculino" %}
                 <img src="{% static 'img/avatar_masculino.jpg' %}" alt="foto-perfil" />
@@ -166,24 +167,25 @@
           />
           <canvas id="myChart"></canvas>
         </div>
-
         <div class="graphic1">
-          <input type="hidden" id="portugues_certas" value="{{portugues_certas}}"/>
-          <input type="hidden" id="portugues_erradas" value="{{portugues_erradas}}"/>
-          <input type="hidden" id="informatica_certas" value="{{informatica_certas}}"/>
-          <input type="hidden" id="informatica_erradas" value="{{informatica_erradas}}"/>
-          <input type="hidden" id="logica_certas" value="{{logica_certas}}"/>
-          <input type="hidden" id="logica_erradas" value="{{logica_erradas}}"/>
-          <input type="hidden" id="estatistica_certas" value="{{estatistica_certas}}"/>
-          <input type="hidden" id="estatistica_erradas" value="{{estatistica_erradas}}"/>
-          <input type="hidden" id="direito_certas" value="{{direito_certas}}"/>
-          <input type="hidden" id="direito_erradas" value="{{direito_erradas}}"/>
-          <input type="hidden" id="contabilidade_certas" value="{{contabilidade_certas}}"/>
-          <input type="hidden" id="contabilidade_erradas" value="{{contabilidade_erradas}}"/>
-          <input type="hidden" id="criminologia_certas" value="{{criminologia_certas}}"/>
-          <input type="hidden" id="criminologia_erradas" value="{{criminologia_erradas}}"/>
+          {% if total_respostas != 0 %}
+            <input type="hidden" id="portugues_certas" value="{{portugues_certas}}"/>
+            <input type="hidden" id="portugues_erradas" value="{{portugues_erradas}}"/>
+            <input type="hidden" id="informatica_certas" value="{{informatica_certas}}"/>
+            <input type="hidden" id="informatica_erradas" value="{{informatica_erradas}}"/>
+            <input type="hidden" id="logica_certas" value="{{logica_certas}}"/>
+            <input type="hidden" id="logica_erradas" value="{{logica_erradas}}"/>
+            <input type="hidden" id="estatistica_certas" value="{{estatistica_certas}}"/>
+            <input type="hidden" id="estatistica_erradas" value="{{estatistica_erradas}}"/>
+            <input type="hidden" id="direito_certas" value="{{direito_certas}}"/>
+            <input type="hidden" id="direito_erradas" value="{{direito_erradas}}"/>
+            <input type="hidden" id="contabilidade_certas" value="{{contabilidade_certas}}"/>
+            <input type="hidden" id="contabilidade_erradas" value="{{contabilidade_erradas}}"/>
+            <input type="hidden" id="criminologia_certas" value="{{criminologia_certas}}"/>
+            <input type="hidden" id="criminologia_erradas" value="{{criminologia_erradas}}"/>
 
-          <canvas id="myChartBar" width="400" height="200"></canvas>
+            <canvas id="myChartBar" width="400" height="200"></canvas>
+          {% endif %}
           <button
             class="button2"
             onclick="document.getElementById('id01').style.display='block'"
@@ -239,97 +241,9 @@
     <footer class="footer" style="display: none">
       <p>&copy; | Desenvolvido por Samio Santos</p>
     </footer>
+    
     <script src="{% static 'scripts/script.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-      var ctx = document.getElementById("myChart");
-      var respostas_certas = document.getElementById("respostas_certas").value;
-      var respostas_erradas = document.getElementById("respostas_erradas").value;
-      if (respostas_certas == 0 && respostas_erradas == 0) {
-        var myChart = new Chart(ctx, {
-          type: "doughnut",
-          data: {
-            datasets: [
-              {
-                data: [1],
-                backgroundColor: ["black"],
-                hoverOffset: 4,
-                label: "Label",
-              },
-            ],
-            labels: ["Nem uma questão respondida"],
-          },
-        });
-      } else {
-        var myChart = new Chart(ctx, {
-          type: "doughnut",
-          data: {
-            datasets: [
-              {
-                data: [respostas_certas, respostas_erradas],
-                backgroundColor: ["green", "red"],
-                hoverOffset: 4,
-                label: "Label",
-              },
-            ],
-            labels: ["Total Acertos", "Total Erros"],
-          },
-          options: {
-            responsive: true,
-            animation: {
-              animateScale: true,
-            },
-          },
-        });
-      }
-    </script>
-    
-    <script>
-      var ctx = document.getElementById("myChartBar");
-
-      var portugues_certas = document.getElementById("portugues_certas").value;
-      var portugues_erradas = document.getElementById("portugues_erradas").value;
-      var informatica_certas = document.getElementById("informatica_certas").value;
-      var informatica_erradas = document.getElementById("informatica_erradas").value;
-      var logica_certas = document.getElementById("logica_certas").value;
-      var logica_erradas = document.getElementById("logica_erradas").value;
-      var estatistica_certas = document.getElementById("estatistica_certas").value;
-      var estatistica_erradas = document.getElementById("estatistica_erradas").value;
-      var direito_certas = document.getElementById("direito_certas").value;
-      var direito_erradas = document.getElementById("direito_erradas").value;
-      var contabilidade_certas = document.getElementById("contabilidade_certas").value;
-      var contabilidade_erradas = document.getElementById("contabilidade_erradas").value;
-      var criminologia_certas = document.getElementById("criminologia_certas").value;
-      var criminologia_erradas = document.getElementById("criminologia_erradas").value;
-
-      var myChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: [
-            "Português",
-            "Informatica",
-            "Lógica",
-            "Estatísca",
-            "Direito",
-            "Contabilidade",
-            "Criminologia",
-            "Atualidades"
-          ],
-          datasets: [
-            {
-              label: "Acertos",
-              data: [portugues_certas, informatica_certas, logica_certas, estatistica_certas, direito_certas, contabilidade_certas, criminologia_certas, 3],
-              backgroundColor: ["Green"],
-            },
-            {
-              label: "Erros",
-              data: [portugues_erradas, informatica_erradas, logica_erradas, estatistica_erradas, direito_erradas, contabilidade_erradas, criminologia_erradas, 2],
-              backgroundColor: ["Red"],
-            },
-          ],
-        },
-      });
-    </script>
+    <script src="{% static 'scripts/graphic.js' %}"></script>
   </body>
 </html>

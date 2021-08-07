@@ -32,7 +32,6 @@ def perguntas(request, materia):
     banca = request.POST.get('banca')
     disciplina = request.POST.get('materia')
     if request.method == 'POST':
-        print(resposta_usuario)
         # Identificador da pergunta vinda do template
         id_pergunta = request.POST.get('questao')
         # Gabarito da pergunta cadastrada no banco de dados
@@ -130,9 +129,10 @@ def questoes_nao_resolvidas(request, materia):
         if not questoes_resolvidas:
             lista.append(pergunta)
     
-    # Pegar a resposta do usuário
+    # Pegar a resposta do usuário, banca e a materia
     resposta_usuario = request.POST.get('resp')
     banca = request.POST.get('banca')
+    disciplina = request.POST.get('materia')
 
     # Conta o total de questões não resolvidas da materia
     count = len(lista)
@@ -150,6 +150,7 @@ def questoes_nao_resolvidas(request, materia):
                 model_resposta.resposta_pergunta = questao
                 model_resposta.usuario = user
                 model_resposta.resposta_usuario = resposta_usuario
+                model_resposta.materia = disciplina
                 model_resposta.banca = banca
                 model_resposta.respondida = True
                 
@@ -159,6 +160,7 @@ def questoes_nao_resolvidas(request, materia):
                 model_resposta.resposta_pergunta = questao
                 model_resposta.usuario = user
                 model_resposta.resposta_usuario = resposta_usuario
+                model_resposta.materia = disciplina
                 model_resposta.banca = banca
                 model_resposta.respondida = True
 

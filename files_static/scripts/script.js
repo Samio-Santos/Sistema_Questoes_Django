@@ -402,3 +402,26 @@ function mostratexto(text, vertext) {
 
   }
 }
+
+// Script para pré-visualizar a foto de perfil antes de salvar
+if (document.querySelector('.img-perfil') && document.getElementById('file')) {
+
+  foto_perfil = document.querySelector('.img-perfil')
+  file = document.getElementById('file')
+  
+  file.addEventListener('change', () => {
+  
+    if (file.files.length <= 0) {
+      return
+    }
+  
+    let reader = new FileReader()
+  
+    reader.onload = () => {
+      foto_perfil.src = reader.result
+    }
+  
+    reader.readAsDataURL(file.files[0])
+    
+  })
+}

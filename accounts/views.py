@@ -216,14 +216,12 @@ def dashboard(request):
 def perfil_usuario(request, id):
     data = {}
     sexo = request.POST.get('sexo')
-
     user = CostumerUser.objects.get(id=id)
     form  = Userform(request.POST or None, request.FILES or None, instance=user)
 
     data['user'] = user
     data['form'] = form
 
-    print(sexo)
     if request.method == 'POST':
         if form.is_valid():
             form.sexo = sexo
