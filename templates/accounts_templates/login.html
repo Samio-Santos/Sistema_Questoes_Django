@@ -3,7 +3,7 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
     <title>Login</title>
     <link rel="icon" href="{% static 'img/universidade.png' %}">
     <link rel="stylesheet" href="{% static 'css_accounts/menu.css' %}" />
@@ -31,74 +31,72 @@
     </header>
     <main>
       {% if not user.is_authenticated %}
-        <form action="{% url 'login' %}" method="POST" name="form-login">
-          {% csrf_token %}
-          <fieldset>
-            <div class="box-login">
-              {% if messages %}
-                {% for message in messages %}
-                  <div class="{{ message.tags }}" role="alert">
-                    {{ message }}
-                  </div>
-                {% endfor %}
-              {% endif %}
-              <div class="input-block">
-                <label for="user">Login:</label><br />
-                <i class="fas fa-user-circle"></i>
-                <input type="text" name="user" value="{{request.POST.user}}" id="user" placeholder="Email" required />
-              </div>
-              
-              <div class="input-block">
-                <label for="psw">Senha:</label><br />
-                <i id="senha" class="fas fa-lock"></i>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  maxlength="45"
-                  placeholder="Password"
-                  required
-                />
-
-                <div class="box-password">
-                  <input id="showPassword" type="checkbox" style="display: none;">
-                  <label for="showPassword">
-                    <img src="{% static 'img/mostrar.png' %}" alt="MostraSenha" onclick="mostraSenha()">
-                  </label>
+        <section>
+          <form action="{% url 'login' %}" method="POST" name="form-login">
+            {% csrf_token %}
+            <fieldset>
+              <div class="box-login">
+                {% if messages %}
+                  {% for message in messages %}
+                    <div class="{{ message.tags }}" role="alert">
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+                <div class="input-block">
+                  <label for="user">Login:</label><br />
+                  <i class="fas fa-user-circle"></i>
+                  <input type="text" name="user" value="{{request.POST.user}}" id="user" placeholder="Email" required />
                 </div>
                 
-              </div>
+                <div class="input-block">
+                  <label for="psw">Senha:</label><br />
+                  <i id="senha" class="fas fa-lock"></i>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    maxlength="45"
+                    placeholder="Password"
+                    required
+                  />
 
-              <div class="input-block">
-                <a href="{% url 'register' %}">Cadastra-se</a>
-              </div>
+                  <div class="box-password">
+                    <img id="hide" src="{% static 'img/escondido.png' %}" alt="MostraSenha" onclick="mostraSenha()">
+                  </div>
+                  
+                </div>
 
-              <div class="input-block">
-                <a href="{% url 'reset_password' %}">Esqueceu a senha</a>
+                <div class="input-block">
+                  <a href="{% url 'register' %}">Cadastra-se</a>
+                </div>
+
+                <div class="input-block">
+                  <a href="{% url 'reset_password' %}">Esqueceu a senha</a>
+                </div>
               </div>
+            </fieldset>
+            
+            <div class="button-block">
+              <button type="submit">Entrar</button>
             </div>
-          </fieldset>
-          
-          <div class="button-block">
-            <button type="submit">Entrar</button>
-          </div>
 
-          <h5>Conecte-se com:</h5>
-          <div class="conect">
-            <!-- <a href="{% url 'social:begin' 'facebook' %}">
-              <img src="{% static 'img/facebook.png' %}" alt="login-facebook">
-            </a> -->
+            <h5>Conecte-se com:</h5>
+            <div class="conect">
+              <!-- <a href="{% url 'social:begin' 'facebook' %}">
+                <img src="{% static 'img/facebook.png' %}" alt="login-facebook">
+              </a> -->
 
-            <a href="{% url 'social:begin' 'github' %}">
-              <img src="{% static 'img/github.png' %}" alt="login-github">
-            </a>
+              <a href="{% url 'social:begin' 'github' %}">
+                <img src="{% static 'img/github.png' %}" alt="login-github">
+              </a>
 
-            <a href="{% url 'social:begin' 'google-oauth2' %}">
-              <img src="{% static 'img/google.png' %}" alt="login-google">
-            </a>
-          </div>
-        </form>
-      
+              <a href="{% url 'social:begin' 'google-oauth2' %}">
+                <img src="{% static 'img/google.png' %}" alt="login-google">
+              </a>
+            </div>
+          </form>
+        </section>
       {% else %}
         <div class="container-logado">
           <div>

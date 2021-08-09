@@ -1,9 +1,13 @@
 function mostraSenha() {
   var senha = document.getElementById("password");
+  var iconSenha = document.getElementById("hide");
+
   if (senha.type === "password") {
     senha.type = "text";
+    iconSenha.src = "/static/img/mostrar.png";
   } else {
     senha.type = "password";
+    iconSenha.src = "/static/img/escondido.png";
   }
 }
 
@@ -259,7 +263,7 @@ function resp_ajax(id_pergunta) {
                 document.querySelector(`#errado${id_pergunta}`).disabled = true;
               }
             } else if (radio.checked && banca.value == "Vunesp") {
-                if (radio.value == alternativa_correta) {
+              if (radio.value == alternativa_correta) {
                 mensagem.innerHTML = `
                   <div class="sk-circle">
                     <div class="sk-circle1 sk-child"></div>
@@ -389,39 +393,33 @@ if (frase) {
 
 function mostratexto(text, vertext) {
   var container = document.getElementById(text);
-  var vertext = document.getElementById(vertext)
-  
+  var vertext = document.getElementById(vertext);
+
   if (container.style.display === "none") {
     container.style.display = "block";
-    vertext.textContent = "Texto associado -"
-
-    
+    vertext.textContent = "Texto associado -";
   } else {
     container.style.display = "none";
-    vertext.textContent = "Texto associado +"
-
+    vertext.textContent = "Texto associado +";
   }
 }
 
 // Script para pré-visualizar a foto de perfil antes de salvar
-if (document.querySelector('.img-perfil') && document.getElementById('file')) {
+if (document.querySelector(".img-perfil") && document.getElementById("file")) {
+  foto_perfil = document.querySelector(".img-perfil");
+  file = document.getElementById("file");
 
-  foto_perfil = document.querySelector('.img-perfil')
-  file = document.getElementById('file')
-  
-  file.addEventListener('change', () => {
-  
+  file.addEventListener("change", () => {
     if (file.files.length <= 0) {
-      return
+      return;
     }
-  
-    let reader = new FileReader()
-  
+
+    let reader = new FileReader();
+
     reader.onload = () => {
-      foto_perfil.src = reader.result
-    }
-  
-    reader.readAsDataURL(file.files[0])
-    
-  })
+      foto_perfil.src = reader.result;
+    };
+
+    reader.readAsDataURL(file.files[0]);
+  });
 }
