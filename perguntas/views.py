@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 
 from respostas.models import Resposta
 from .models import Pergunta
+from random import shuffle
 
 
 @login_required(redirect_field_name='#usu@rio$',login_url='login')
@@ -13,19 +14,24 @@ from .models import Pergunta
 def perguntas(request, materia):
     data = {}
     user = request.user
+    lista_perguntas = []
 
-    pergunta = Pergunta.objects.order_by('-id').filter(
+    # Faz uma iteração com models "PERGUNTA" e colocar dentro de uma lista
+    for pergunta in Pergunta.objects.order_by('-id').filter(
         materia__materia__iexact=materia,
         disponivel=True
-    )
-    
+    ):
+        lista_perguntas.append(pergunta)
+        
 
     respostas = Resposta.objects.filter(
         usuario=user
     )
 
-    # Conta o total de questões que a matéria possui
-    count = pergunta.count()
+    # embaralha as questoes
+    # Conta o total de questões da materia
+    shuffle(lista_perguntas)
+    count = len(lista_perguntas)
 
     # Pegar a resposta do usuário
     resposta_usuario = request.POST.get('resp')
@@ -60,11 +66,11 @@ def perguntas(request, materia):
 
                 model_resposta.save()
     # Paginação
-    paginator = Paginator(pergunta, 4)
+    paginator = Paginator(lista_perguntas, 4)
     page = request.GET.get('p')
-    pergunta = paginator.get_page(page)
+    lista_perguntas = paginator.get_page(page)
 
-    data['perguntas'] = pergunta
+    data['perguntas'] = lista_perguntas
     data['count'] = count
     data['resposta'] = respostas
     data['materia'] = materia
@@ -106,7 +112,7 @@ def questoes_resolvidas(request, materia):
 def questoes_nao_resolvidas(request, materia):
     data = {}
     user = request.user
-    lista = []
+    lista_perguntas = []
     
     resposta = Resposta.objects.filter(
         usuario=user
@@ -127,15 +133,17 @@ def questoes_nao_resolvidas(request, materia):
         # Verifica se a questão foi resolvida pelo usuário
         # Se não resolvidas, então a questão é adicionada na lista e exibida no template
         if not questoes_resolvidas:
-            lista.append(pergunta)
+            lista_perguntas.append(pergunta)
     
     # Pegar a resposta do usuário, banca e a materia
     resposta_usuario = request.POST.get('resp')
     banca = request.POST.get('banca')
     disciplina = request.POST.get('materia')
 
+    # embaralha as questoes
     # Conta o total de questões não resolvidas da materia
-    count = len(lista)
+    shuffle(lista_perguntas)
+    count = len(lista_perguntas)
 
     if request.method == 'POST':
         # Identificador da pergunta vinda do template
@@ -167,11 +175,11 @@ def questoes_nao_resolvidas(request, materia):
                 model_resposta.save()
     
     # Paginação
-    paginator = Paginator(lista, 4)
+    paginator = Paginator(lista_perguntas, 4)
     page = request.GET.get('p')
-    lista = paginator.get_page(page)
+    lista_perguntas = paginator.get_page(page)
 
-    data['perguntas'] = lista
+    data['perguntas'] = lista_perguntas
     data['resposta'] = resposta
     data['count'] = count
     data['materia'] = materia

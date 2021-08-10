@@ -16,7 +16,6 @@ def login(request):
 
     usuario = request.POST.get('user')
     senha = request.POST.get('password')
-
     user = auth.authenticate(request, username=usuario, password=senha)
     modelUser = get_user_model()
     try:

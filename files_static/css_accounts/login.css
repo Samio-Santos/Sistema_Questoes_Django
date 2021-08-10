@@ -179,6 +179,7 @@ footer {
 @media only screen and (min-device-width: 260px) and (max-device-width: 640px) {
   footer {
     position: absolute;
+    display: none;
   }
 
   .box-password {
