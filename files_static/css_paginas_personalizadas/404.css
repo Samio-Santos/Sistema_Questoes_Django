@@ -1,0 +1,38 @@
+body {
+    background: url('../img/004.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-button {
+    position: absolute;
+    bottom: 2rem;
+}
+
+.container-button a {
+    text-decoration: none;
+    border-radius: 5px;
+    color: white;
+    padding: 8px;
+    background-color: #00008bcb;
+    transition: 1s;
+}
+
+.container-button a:hover {
+    background-color: #00008b;
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 640px) {
+    body {
+        background-size: 250%;
+    }
+
+    .container-button {
+        position: absolute;
+        bottom: 6rem;
+    }
+  }

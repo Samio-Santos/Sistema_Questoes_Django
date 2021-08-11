@@ -1,5 +1,5 @@
 body {
-  background: url("../img/pexels-katerina-holmes-5905448.jpg") no-repeat;
+  background: url("../img/background-login.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -7,7 +7,7 @@ body {
 
 main {
   height: 100vh;
-  background-color: rgba(245, 245, 245, 0.705);
+  background-color: rgba(245, 245, 245, 0.575);
 }
 
 form {
@@ -28,7 +28,7 @@ fieldset {
 }
 
 .input-block label {
-  font-weight: bold;
+  font-weight: bolder;
   position: relative;
   bottom: 0.5rem;
 }
