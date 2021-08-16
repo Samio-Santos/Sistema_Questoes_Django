@@ -104,6 +104,9 @@
               
               {% elif user.sexo == "Feminino" %}
                 <img src="{% static 'img/avatar_feminino.jpg' %}" alt="foto-perfil" />
+
+              {% elif user.sexo == None %}
+                <img src="{% static 'img/user2.png' %}" alt="foto-perfil" />
               {% endif %}
             {% endif %}
             <a href="{% url 'perfil_user' user.id %}"><span>Editar Perfil</span></a>

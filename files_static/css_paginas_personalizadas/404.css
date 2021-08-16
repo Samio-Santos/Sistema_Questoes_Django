@@ -1,6 +1,6 @@
 body {
     background: url('../img/004.jpg') no-repeat;
-    background-size: cover;
+    background-size: 80%;
     background-position: center;
     background-attachment: fixed;
     display: flex;
@@ -28,7 +28,7 @@ body {
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 640px) {
     body {
-        background-size: 250%;
+        background-size: 150%;
     }
 
     .container-button {

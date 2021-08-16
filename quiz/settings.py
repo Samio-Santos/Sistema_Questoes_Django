@@ -13,9 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from django.contrib.messages import constants
-from archive import *
 import os
-
+from archive import SECRET_KEY_GITHUB, SECRET_KEY_GOOGLE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +29,7 @@ SECRET_KEY = 'django-insecure-zp0zy!vqe=d08588vg%1m@myhx_&l3c#jqpyn4x^doq4--6ye%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -183,19 +182,19 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 # Autenticação pelo facebook
-SOCIAL_AUTH_FACEBOOK_KEY = '414184179999238'
+SOCIAL_AUTH_FACEBOOK_KEY = '*******************'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'SECRET_KEY_FACEBOOK'
 
 # Autenticação pelo Github
-SOCIAL_AUTH_GITHUB_KEY = 'a4a0697de7ac8fb277e2'
-SOCIAL_AUTH_GITHUB_SECRET = 'SECRET_KEY_GITHUB'
+SOCIAL_AUTH_GITHUB_KEY = '3f2a1a544682c1172c98'
+SOCIAL_AUTH_GITHUB_SECRET = SECRET_KEY_GITHUB
 
 # Autenticação pelo Google
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '955161584054-ocobrnmng47tj4625kk4rtsbojqbukjf.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'SECRET_KEY_GOOGLE'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '60211194618-2opsll46d29uc51nu20nvuevlkvsb58t.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SECRET_KEY_GOOGLE
 
 LOGIN_REDIRECT_URL = '/'
-LOGOUt_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 ##### CONFIGURAÇÕES DO DO AXE #####
 
@@ -223,8 +222,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = EMAIL
-EMAIL_HOST_PASSWORD = PASSWORD
+EMAIL_HOST_USER = "EMAIL"
+EMAIL_HOST_PASSWORD = "PASSWORD"
 EMAIL_TIMEOUT = 60
 DEFAULT_FROM_EMAIL = 'Simulados team'
 

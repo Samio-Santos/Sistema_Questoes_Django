@@ -1,8 +1,11 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from accounts.form import EmailValidationPassword
-from .views import login, logout, locked, register, dashboard, Reset_Password_Complete, perfil_usuario
-
+from .views import (
+    login, logout, locked, register, 
+    dashboard, Reset_Password_Complete, 
+    perfil_usuario
+    )
 
 urlpatterns = [
     path('login/', login, name='login'),
