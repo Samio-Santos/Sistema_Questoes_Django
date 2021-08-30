@@ -1,3 +1,28 @@
+/* Quando o usuário clica no botão,
+alternar entre ocultar e mostrar o conteúdo suspenso  */
+function myfilter() {
+  filter = document.getElementById("myfilter").classList.toggle("show");
+  iconeSeta = document.querySelector(".seta");
+
+  if (filter === true) {
+    iconeSeta.src = "/static/img/seta-suspensa-cima.png";
+  } else {
+    iconeSeta.src = "/static/img/seta-suspensa.png";
+  }
+}
+
+window.onclick = function (e) {
+  if (!e.target.matches(".filter")) {
+    var dropdowns = document.getElementsByClassName("dropdown-filter");
+    for (var d = 0; d < dropdowns.length; d++) {
+      var openDropdown = dropdowns[d];
+      if (openDropdown.classList.contains("show")) {
+        openDropdown.classList.remove("show");
+      }
+    }
+  }
+};
+
 function mostraSenha() {
   var senha = document.getElementById("password");
   var iconSenha = document.getElementById("hide");
@@ -129,7 +154,7 @@ document.querySelectorAll("#id_pergunta").forEach((id_pergunta) => {
   } else {
     if (
       questoes_respondidas.value == "True" &&
-      banca.value == "Cespe/Cebraspe"
+      banca.value == "Cespe"
     ) {
       certo = document.querySelector(`#certo${id}`);
       errado = document.querySelector(`#errado${id}`);
@@ -207,7 +232,7 @@ function resp_ajax(id_pergunta) {
           banca = document.getElementById(`banca${id_pergunta}`);
 
           document.getElementsByName("resp").forEach((radio) => {
-            if (radio.checked && banca.value == "Cespe/Cebraspe") {
+            if (radio.checked && banca.value == "Cespe") {
               if (radio.value == alternativa_correta) {
                 mensagem.innerHTML = `
                   <div class="sk-circle">

@@ -26,7 +26,7 @@
     <header>
       <div class="container-header">
         <a href="{% url 'dashboard' %}">
-          <h1>Questões resolvidas - {{materia}}</h1>
+          <h1>Área questões resolvidas - {{materia}}</h1>
         </a>
         <img src="{% static 'img/logo.png' %}" alt="logo" />
       </div>
@@ -35,9 +35,8 @@
       <section>
         {% if resolvidas %}
           {% include 'perguntas_templates/filtros_questoes.html' %}
-
           {% for resolvida in resolvidas %}
-            {% if resolvida.banca == "Cespe/Cebraspe" %}
+            {% if resolvida.banca == "Cespe" %}
               <div class="box-title">
                 <small>{{ forloop.counter0|add:resolvidas.start_index}} - Questão_ID{{resolvida.resposta_pergunta.id}}</small>
                   <span>{{resolvida.resposta_pergunta.materia}}</span>
@@ -182,7 +181,7 @@
           </li>
 
           <li>
-            <a id="next" href="?p={{ perguntas.previous_page_number }}">&lsaquo;</a>
+            <a id="next" href="?p={{ resolvidas.previous_page_number }}">&lsaquo;</a>
           </li>
         {% endif %}
       
@@ -204,11 +203,11 @@
 
         {% if resolvidas.has_next %}
           <li>
-            <a id="next" href="?p={{ perguntas.next_page_number }}">&rsaquo;</a>
+            <a id="next" href="?p={{ resolvidas.next_page_number }}">&rsaquo;</a>
           </li>
 
           <li>
-            <a id="next" href="?p={{ perguntas.paginator.num_pages }}">&raquo;</a>
+            <a id="next" href="?p={{ resolvidas.paginator.num_pages }}">&raquo;</a>
           </li>
         {% endif %}
       </ul>

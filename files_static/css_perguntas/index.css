@@ -44,7 +44,24 @@ section {
   margin: 1rem;
 }
 
-section .filters_category a {
+section .filters_category {
+  background-color: grey;
+}
+
+section .filters_category nav ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  cursor: pointer;
+}
+
+section .filters_category nav ul li img {
+  height: 1rem;
+}
+
+section .filters_category nav,
+.filters_category a {
   display: block;
   text-decoration: none;
   font-size: 16px;
@@ -57,6 +74,14 @@ section .filters_category a {
   cursor: pointer;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.dropdown-filter {
+  display: none;
+}
+
+.show {
+  display: block;
 }
 
 section .count {
@@ -86,6 +111,7 @@ section .box-title span {
   border-radius: 3px;
   padding: 6px;
 }
+
 section form .container-text {
   margin-top: 1rem;
 }
@@ -201,7 +227,7 @@ section .information p {
 
 section .information .fa-info-circle {
   position: relative;
-  right: .4rem;
+  right: 0.4rem;
 }
 
 section button:disabled {
@@ -289,6 +315,18 @@ footer {
     width: 70%;
     margin: 0 auto;
     margin-top: 20px;
+  }
+
+  .dropdown-filter {
+    display: inline-block;
+  }
+
+  section .filters_category {
+    background-color: initial;
+  }
+
+  section .filters_category nav {
+    display: none;
   }
 
   section .filters_category a {

@@ -183,7 +183,83 @@ def questoes_nao_resolvidas(request, materia):
     data['resposta'] = resposta
     data['count'] = count
     data['materia'] = materia
-    return render(request, 'perguntas_templates/questoes_nao_resolvidas.html', data)
+    data['variavel'] = 'não resolvidas'
+    return render(request, 'perguntas_templates/index.html', data)
+
+@login_required(redirect_field_name='#usu@rio$',login_url='login')
+# Função para exibir SOMENTE as perguntas da banca VUNESP, CESPE 
+# ou qualquer outra banca cadastrada no banco de dados
+def filtro_banca(request, banca, materia):
+    data = {}
+    user = request.user
+
+    # faz o filtro pela banca
+    if banca == "Vunesp":
+        pergunta = Pergunta.objects.filter(
+            disponivel=True,
+            banca__banca__iexact=banca,
+            materia__materia__iexact=materia,
+        )
+    
+    elif banca == "Cespe":
+        pergunta = Pergunta.objects.filter(
+            disponivel=True,
+            banca__banca__iexact=banca,
+            materia__materia__iexact=materia,
+        )
+    # filtra somente a resposta do usuario logado
+    resposta = Resposta.objects.filter(
+        usuario=user
+    )
+ 
+    # Conta o total de questões resolvidas da materia
+    count = pergunta.count()
+
+    # Pegar a resposta do usuário e a materia
+    resposta_usuario = request.POST.get('resp')
+    disciplina = request.POST.get('materia')
+
+    if request.method == 'POST':
+        # Id da pergunta vinda do template
+        id_pergunta = request.POST.get('questao')
+        # Gabarito da pergunta cadastrada no banco de dados
+        questao = Pergunta.objects.get(id=id_pergunta)
+        pergunta_respondida = request.POST.get('id_resposta')
+        model_resposta = Resposta()
+
+        if pergunta_respondida is None:
+            if resposta_usuario == questao.alternativas_correta:
+                model_resposta.resposta_pergunta = questao
+                model_resposta.usuario = user
+                model_resposta.resposta_usuario = resposta_usuario
+                model_resposta.materia = disciplina
+                model_resposta.banca = banca
+                model_resposta.respondida = True
+                
+                model_resposta.save()
+
+            else:
+                model_resposta.resposta_pergunta = questao
+                model_resposta.usuario = user
+                model_resposta.resposta_usuario = resposta_usuario
+                model_resposta.materia = disciplina
+                model_resposta.banca = banca
+                model_resposta.respondida = True
+
+                model_resposta.save()
+    
+    # Paginação
+    paginator = Paginator(pergunta, 4)
+    page = request.GET.get('p')
+    pergunta = paginator.get_page(page)
+
+    # data['resolvidas'] = resolvidas
+    data['perguntas'] = pergunta
+    data['resposta'] = resposta
+    data['count'] = count
+    data['materia'] = materia
+    data['variavel'] = banca
+    return render(request, 'perguntas_templates/index.html', data)
 
 # Zera as questoes resolvidas pelo usuario
 def deletar_questoes(request):

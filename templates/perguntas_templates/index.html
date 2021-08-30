@@ -14,7 +14,7 @@
     <header>
       <div class="container-header">
         <a href="{% url 'dashboard' %}">
-          <h1>Área de questões - {{materia}}</h1>
+          <h1>Área de questões {{variavel}} - {{materia}}</h1>
         </a>
         <img src="{% static 'img/logo.png' %}" alt="logo" />
       </div>
@@ -27,6 +27,13 @@
           {% for pergunta in perguntas %}
             {% include 'perguntas_templates/filtros_por_banca.html' %}
           {% endfor %}
+        {% else %}
+          <div class="information">
+            <div>
+              <p><i class="fas fa-info-circle" title="Todas as perguntas foram respondidas"></i>Todas as perguntas dessa matéria foram respondidas!</p>
+              {% include 'perguntas_templates/filtros_questoes.html' %}
+            </div>
+          </div>
         {% endif %}
       </section>
       <ul class="pagination">

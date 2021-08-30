@@ -1,5 +1,5 @@
 {% load static %}
-{% if pergunta.banca.banca == "Cespe/Cebraspe"%}
+{% if pergunta.banca.banca == "Cespe"%}
     <div class="box-title">
         <small>{{ forloop.counter0|add:perguntas.start_index}} - Questão_ID{{ pergunta.id}}</small>
         <span>{{pergunta.materia}}</span>
