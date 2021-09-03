@@ -4,7 +4,11 @@
     <ul>
       <li class="filter" onclick="myfilter()">
         Filtro
-        <img class="seta" src="{% static 'img/seta-suspensa.png' %}" alt="abre opções" />
+        <img
+          class="seta"
+          src="{% static 'img/seta-suspensa.png' %}"
+          alt="abre opções"
+        />
       </li>
     </ul>
   </nav>
@@ -23,6 +27,10 @@
     >
 
     <a href="{% url 'filtro_banca' 'Vunesp' 'Português' %}">Questões Vunesp</a>
+
+    <a href="{% url 'certas' 'certas' 'Português' %}">Questões certas</a>
+
+    <a href="{% url 'certas' 'erradas' 'Português' %}">Questões erradas</a>
   </div>
 
   {% elif materia == 'Informática' %}

@@ -1,4 +1,3 @@
-from django.db import models
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -76,36 +75,7 @@ def perguntas(request, materia):
     data['materia'] = materia
     return render(request, 'perguntas_templates/index.html', data)
 
-@login_required(redirect_field_name='#usu@rio$',login_url='login')
-# Função para exibir SOMENTE as perguntas resolvidas
-def questoes_resolvidas(request, materia):
-    data = {}
-    user = request.user
 
-    pergunta = Pergunta.objects.filter(
-        disponivel=True
-    )
-
-    resolvidas = Resposta.objects.order_by('-id').filter(
-        usuario=user,
-        resposta_pergunta__materia__materia=materia,
-        respondida=True
-        
-    )
-
-    # Conta o total de questões resolvidas da materia
-    count = resolvidas.count()
-    
-    # Paginação
-    paginator = Paginator(resolvidas, 4)
-    page = request.GET.get('p')
-    resolvidas = paginator.get_page(page)
-
-    data['resolvidas'] = resolvidas
-    data['perguntas'] = pergunta
-    data['count'] = count
-    data['materia'] = materia
-    return render(request, 'perguntas_templates/questoes_resolvidas.html', data)
 
 @login_required(redirect_field_name='#usu@rio$',login_url='login')
 # Função para exibir SOMENTE as perguntas NÃO resolvidas
@@ -192,7 +162,7 @@ def questoes_nao_resolvidas(request, materia):
 def filtro_banca(request, banca, materia):
     data = {}
     user = request.user
-
+        
     # faz o filtro pela banca
     if banca == "Vunesp":
         pergunta = Pergunta.objects.filter(
