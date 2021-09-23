@@ -14,3 +14,16 @@ class Resposta(models.Model):
 
     def __str__(self):
         return self.usuario.username
+
+
+    def send_resposta(user, pergunta, resposta_usuario, materia, banca):
+        save_resposta =Resposta(
+            usuario=user,
+            resposta_pergunta=pergunta,
+            resposta_usuario=resposta_usuario,
+            materia=materia,
+            banca=banca,
+            respondida = True
+        )
+
+        save_resposta.save()

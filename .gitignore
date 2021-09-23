@@ -1,2 +1,8 @@
+htmlcov/*
+.vscode/*
+.venv/*
+.coverage
+.coveragerc
 archive.py
 questoes_nao_resolvidas.html
+__pycahce__

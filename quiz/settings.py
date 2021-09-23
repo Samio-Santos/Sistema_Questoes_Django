@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-zp0zy!vqe=d08588vg%1m@myhx_&l3c#jqpyn4x^doq4--6ye%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "*"]
 
 
 # Application definition
@@ -161,7 +161,6 @@ MESSAGE_TAGS = {
 AUTHENTICATION_BACKENDS = (
     'accounts.backend.EmailUserBackend',
     'axes.backends.AxesBackend',
-    'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.google.GoogleOAuth2',
 

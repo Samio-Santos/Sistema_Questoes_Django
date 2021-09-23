@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
-from django.core.validators import validate_email
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 
+from accounts.facad_accounts import *
+
+from django.urls import reverse_lazy
 from accounts.form import Userform
 from .models import CostumerUser
 from respostas.models import Resposta
 from perguntas.models import Pergunta
-
 
 def login(request):
     if request.method != 'POST':
@@ -24,8 +25,12 @@ def login(request):
         # Verifica se o username é diferente do email
         # Caso seja TRUE, então essa condição sera executada
         if rede_social.username != rede_social.email:
-            messages.error(request, 'Sua conta está vinculada a sua rede social. Clique no botão de mídia social para acessar.')
-            return render(request, 'accounts_templates/login.html')
+            messages.error(request, 'Esta conta está vinculada a um rede social abaixo!')
+            return render(request, 'accounts_templates/login.html', {'notUser': 'notUser'})
+
+        if not user:
+            messages.error(request, 'Usuário ou senha inválidos.')
+            return render(request, 'accounts_templates/login.html', {'invalid': 'invalid'})
 
         else:
             auth.login(request, user)
@@ -34,8 +39,8 @@ def login(request):
                 
  
     except modelUser.DoesNotExist:
-        messages.error(request, 'Usuário ou senha inválidos.')
-        return render(request, 'accounts_templates/login.html')
+        messages.error(request, 'Usuário não está cadastrado!')
+        return render(request, 'accounts_templates/login.html', {'notUser': 'notUser'})
 
 def logout(request):
     auth.logout(request)
@@ -51,8 +56,7 @@ def register(request):
     sexo = request.POST.get('sexo')
     senha = request.POST.get('password')
     rsenha = request.POST.get('Rsenha')
-    print(sexo)
-    
+
     # Variaveis para vericar se a senha possui pelo menos:
     # uma letra maiuscula 
     # uma letra minuscula 
@@ -61,50 +65,16 @@ def register(request):
     capital = any(chr.isupper() for chr in senha)
     numeric = any(chr.isnumeric() for chr in senha)
 
-    if not nome or not sobrenome or not email or not senha or not rsenha:
-        messages.error(request, 'Nenhum campo pode ficar vázio')
-        return render(request, 'accounts_templates/register.html')
-    
-    try:
-        validate_email(email)
-    except:
-        messages.error(request, 'Email inválido')
+    if not get_validacao_dados_register(request=request, nome=nome, sobrenome=sobrenome, email=email, senha=senha, rsenha=rsenha, capital=capital, lower=lower, numeric=numeric, sexo=sexo):
         return render(request, 'accounts_templates/register.html')
 
-    if not capital:
-        messages.error(request, 'A senha dever conter pelo menos uma letra maiúscula.')
-        return render(request, 'accounts_templates/register.html')
+    else:
+        messages.success(request, 'Usuário registrado com sucesso. Agora faça login!')
+        user = CostumerUser.objects.create_user(username=email, email=email, sexo=sexo, password=senha, first_name=nome, last_name=sobrenome)
 
-    if not lower:
-        messages.error(request, 'A senha dever conter pelo menos uma letra minúscula.')
-        return render(request, 'accounts_templates/register.html')
+        user.save()
 
-    if not numeric:
-        messages.error(request, 'A senha dever conter pelo menos um número.')
-        return render(request, 'accounts_templates/register.html')
-
-    if not sexo:
-        messages.error(request, 'O Campo "Sexo" não pode ficar vázio.')
-        return render(request, 'accounts_templates/register.html')
-
-    if len(senha) < 8:
-        messages.error(request, 'Senha muito curta! Senha precisa ter no minimo 8 caracteres.')
-        return render(request, 'accounts_templates/register.html')
-
-    if senha != rsenha:
-        messages.error(request, 'Senhas não são iguais. Tente novamente!')
-        return render(request, 'accounts_templates/register.html')
-        
-    if CostumerUser.objects.filter(email=email).exists():
-        messages.error(request, 'Email já existe!')
-        return render(request, 'accounts_templates/register.html')
-
-    messages.success(request, 'Usuário registrado com sucesso. Agora faça login!')
-    user = CostumerUser.objects.create_user(username=email, email=email, sexo=sexo, password=senha, first_name=nome, last_name=sobrenome)
-
-    user.save()
-
-    return redirect('login')
+        return redirect('login')
 
 @login_required(redirect_field_name='#usu@rio$',login_url='login')
 def dashboard(request):
@@ -145,81 +115,29 @@ def dashboard(request):
                 if pergunta.alternativas_correta == respondida.resposta_usuario:
                     respostas_certas.append(respondida)
 
-                    if respondida.materia == 'Português':
-                        portugues_certas.append(respondida)
-
-                    if respondida.materia == 'Informática':
-                        informatica_certas.append(respondida)
-
-                    if respondida.materia == 'Lógica':
-                        logica_certas.append(respondida)
-
-                    if respondida.materia == 'Estatística':
-                        estatistica_certas.append(respondida)
-
-                    if respondida.materia == 'Direito':
-                        direito_certas.append(respondida)
-                    
-                    if respondida.materia == 'Contabilidade':
-                        contabilidade_certas.append(respondida)
-                    
-                    if respondida.materia == 'Criminologia':
-                        criminologia_certas.append(respondida)
-                    
+                    get_resposta_certas_dashboard(respondida, portugues_certas, informatica_certas, logica_certas,  estatistica_certas, direito_certas, contabilidade_certas, criminologia_certas, data)
                 else:
+                    get_resposta_erradas_dashboard(respondida, portugues_erradas, informatica_erradas, logica_erradas, estatistica_erradas, direito_erradas, contabilidade_erradas, criminologia_erradas, data)
+                    
                     respostas_erradas.append(respondida)
-
-                    if respondida.materia == 'Português':
-                        portugues_erradas.append(respondida)
-
-                    if respondida.materia == 'Informática':
-                        informatica_erradas.append(respondida)
-
-                    if respondida.materia == 'Lógica':
-                        logica_erradas.append(respondida)
-
-                    if respondida.materia == 'Estatística':
-                        estatistica_erradas.append(respondida)
-
-                    if respondida.materia == 'Direito':
-                        direito_erradas.append(respondida)
-                    
-                    if respondida.materia == 'Contabilidade':
-                        contabilidade_erradas.append(respondida)
-                    
-                    if respondida.materia == 'Criminologia':
-                        criminologia_erradas.append(respondida)
 
     data['total_respostas'] = total_respostas
     data['respostas_certas'] = len(respostas_certas)
     data['respostas_erradas'] = len(respostas_erradas)
 
-    data['portugues_certas'] = len(portugues_certas)
-    data['portugues_erradas'] = len(portugues_erradas)
-    data['informatica_certas'] = len(informatica_certas)
-    data['informatica_erradas'] = len(informatica_erradas)
-    data['logica_certas'] = len(logica_certas)
-    data['logica_erradas'] = len(logica_erradas)
-    data['estatistica_certas'] = len(estatistica_certas)
-    data['estatistica_erradas'] = len(estatistica_erradas)
-    data['direito_certas'] = len(direito_certas)
-    data['direito_erradas'] = len(direito_erradas)
-    data['contabilidade_certas'] = len(contabilidade_certas)
-    data['contabilidade_erradas'] = len(contabilidade_erradas)
-    data['criminologia_certas'] = len(criminologia_certas)
-    data['criminologia_erradas'] = len(criminologia_erradas)
-
     return render(request, 'accounts_templates/dashboard.html', data)
 
 
+@login_required(redirect_field_name='#usu@rio$',login_url='login')
 def perfil_usuario(request, id):
+    if request.user.id != id:
+        return redirect(reverse_lazy('perfil_user', args=[request.user.id]))
+        
     data = {}
     sexo = request.POST.get('sexo')
     user = CostumerUser.objects.get(id=id)
     form  = Userform(request.POST or None, request.FILES or None, instance=user)
 
-    data['user'] = user
-    data['form'] = form
 
     if request.method == 'POST':
         if form.is_valid():
@@ -227,9 +145,11 @@ def perfil_usuario(request, id):
             form.save()
             messages.success(request, 'Dados atualizados com sucesso')
             return redirect('dashboard')
-    
-    else:
-        return render(request, 'accounts_templates/perfil_user.html', data)
+
+    data['user'] = user
+    data['form'] = form
+
+    return render(request, 'accounts_templates/perfil_user.html', data)
 
 
 def locked(request):

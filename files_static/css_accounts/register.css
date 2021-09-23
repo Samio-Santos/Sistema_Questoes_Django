@@ -1,5 +1,5 @@
 body {
-  background: url("../img/pexels-katerina-holmes-5905448.jpg") no-repeat;
+  background: url("../img/background-login.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -69,6 +69,7 @@ form button:hover {
   color: white;
   width: 100%;
   padding: 1rem;
+  font-weight: bolder;
   border-radius: 5px;
   margin-left: 0.5rem;
   margin-top: 1rem;

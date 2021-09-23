@@ -448,3 +448,9 @@ if (document.querySelector(".img-perfil") && document.getElementById("file")) {
     reader.readAsDataURL(file.files[0]);
   });
 }
+
+
+if (document.querySelector(".alert-errorinput")) {
+  input_username = document.querySelector('#username').style.borderBottom = "1px solid red"
+  input_password = document.querySelector('#password').style.borderBottom = "1px solid red"
+}

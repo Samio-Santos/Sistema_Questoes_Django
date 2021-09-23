@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from respostas.models import Resposta
 from .models import Pergunta
 from random import shuffle
+from perguntas.facad import *
 
 
 @login_required(redirect_field_name='#usu@rio$',login_url='login')
@@ -36,34 +37,10 @@ def perguntas(request, materia):
     resposta_usuario = request.POST.get('resp')
     banca = request.POST.get('banca')
     disciplina = request.POST.get('materia')
-    if request.method == 'POST':
-        # Identificador da pergunta vinda do template
-        id_pergunta = request.POST.get('questao')
-        # Gabarito da pergunta cadastrada no banco de dados
-        questao = Pergunta.objects.get(id=id_pergunta)
-        pergunta_respondida = request.POST.get('id_resposta')
-        model_resposta = Resposta()
+    id_pergunta = request.POST.get('questao')
+    
+    valid_pergunta(request, user, resposta_usuario, banca, disciplina, id_pergunta)
 
-        if pergunta_respondida is None:
-            if resposta_usuario == questao.alternativas_correta:
-                model_resposta.resposta_pergunta = questao
-                model_resposta.usuario = user
-                model_resposta.resposta_usuario = resposta_usuario
-                model_resposta.materia = disciplina
-                model_resposta.banca = banca
-                model_resposta.respondida = True
-                
-                model_resposta.save()
-
-            else:
-                model_resposta.resposta_pergunta = questao
-                model_resposta.usuario = user
-                model_resposta.resposta_usuario = resposta_usuario
-                model_resposta.materia = disciplina
-                model_resposta.banca = banca
-                model_resposta.respondida = True
-
-                model_resposta.save()
     # Paginação
     paginator = Paginator(lista_perguntas, 4)
     page = request.GET.get('p')
@@ -89,60 +66,22 @@ def questoes_nao_resolvidas(request, materia):
     )
 
     # Faz uma iteração com models "PERGUNTA"
-    # E depois verifica no models "RESPOSTA" se usuário já respondeu aquela questão
-    for pergunta in Pergunta.objects.order_by('-id').filter(
-        materia__materia__iexact=materia,
-        disponivel=True
-        ):
-
-        questoes_resolvidas = Resposta.objects.filter(
-        usuario=user,
-        resposta_pergunta=pergunta
-        ).exists()
-
-        # Verifica se a questão foi resolvida pelo usuário
-        # Se não resolvidas, então a questão é adicionada na lista e exibida no template
-        if not questoes_resolvidas:
-            lista_perguntas.append(pergunta)
-    
-    # Pegar a resposta do usuário, banca e a materia
-    resposta_usuario = request.POST.get('resp')
-    banca = request.POST.get('banca')
-    disciplina = request.POST.get('materia')
+    # E retorna uma lista com perguntas não resolvidas 
+    pergunta_respondida(lista_perguntas, materia, user)
 
     # embaralha as questoes
     # Conta o total de questões não resolvidas da materia
     shuffle(lista_perguntas)
     count = len(lista_perguntas)
+    
+    # Pegar a resposta do usuário, banca e a materia
+    resposta_usuario = request.POST.get('resp')
+    banca = request.POST.get('banca')
+    disciplina = request.POST.get('materia')
+    id_pergunta = request.POST.get('questao')
 
-    if request.method == 'POST':
-        # Identificador da pergunta vinda do template
-        id_pergunta = request.POST.get('questao')
-        # Gabarito da pergunta cadastrada no banco de dados
-        questao = Pergunta.objects.get(id=id_pergunta)
-        pergunta_respondida = request.POST.get('id_resposta')
-        model_resposta = Resposta()
+    valid_pergunta(request, user, resposta_usuario, banca, disciplina, id_pergunta)
 
-        if pergunta_respondida is None:
-            if resposta_usuario == questao.alternativas_correta:
-                model_resposta.resposta_pergunta = questao
-                model_resposta.usuario = user
-                model_resposta.resposta_usuario = resposta_usuario
-                model_resposta.materia = disciplina
-                model_resposta.banca = banca
-                model_resposta.respondida = True
-                
-                model_resposta.save()
-
-            else:
-                model_resposta.resposta_pergunta = questao
-                model_resposta.usuario = user
-                model_resposta.resposta_usuario = resposta_usuario
-                model_resposta.materia = disciplina
-                model_resposta.banca = banca
-                model_resposta.respondida = True
-
-                model_resposta.save()
     
     # Paginação
     paginator = Paginator(lista_perguntas, 4)
@@ -163,70 +102,23 @@ def filtro_banca(request, banca, materia):
     data = {}
     user = request.user
         
-    # faz o filtro pela banca
-    if banca == "Vunesp":
-        pergunta = Pergunta.objects.filter(
-            disponivel=True,
-            banca__banca__iexact=banca,
-            materia__materia__iexact=materia,
-        )
-    
-    elif banca == "Cespe":
-        pergunta = Pergunta.objects.filter(
-            disponivel=True,
-            banca__banca__iexact=banca,
-            materia__materia__iexact=materia,
-        )
+    # faz o filtro pela banca e retorna perguntas somente da banca
+    #paginação e a contagem das perguntas
+    filtro_banca_perguntas(request, banca, materia, data)
+
     # filtra somente a resposta do usuario logado
     resposta = Resposta.objects.filter(
         usuario=user
     )
- 
-    # Conta o total de questões resolvidas da materia
-    count = pergunta.count()
 
     # Pegar a resposta do usuário e a materia
     resposta_usuario = request.POST.get('resp')
     disciplina = request.POST.get('materia')
+    id_pergunta = request.POST.get('questao')
 
-    if request.method == 'POST':
-        # Id da pergunta vinda do template
-        id_pergunta = request.POST.get('questao')
-        # Gabarito da pergunta cadastrada no banco de dados
-        questao = Pergunta.objects.get(id=id_pergunta)
-        pergunta_respondida = request.POST.get('id_resposta')
-        model_resposta = Resposta()
-
-        if pergunta_respondida is None:
-            if resposta_usuario == questao.alternativas_correta:
-                model_resposta.resposta_pergunta = questao
-                model_resposta.usuario = user
-                model_resposta.resposta_usuario = resposta_usuario
-                model_resposta.materia = disciplina
-                model_resposta.banca = banca
-                model_resposta.respondida = True
-                
-                model_resposta.save()
-
-            else:
-                model_resposta.resposta_pergunta = questao
-                model_resposta.usuario = user
-                model_resposta.resposta_usuario = resposta_usuario
-                model_resposta.materia = disciplina
-                model_resposta.banca = banca
-                model_resposta.respondida = True
-
-                model_resposta.save()
+    valid_pergunta(request, user, resposta_usuario, banca, disciplina, id_pergunta)
     
-    # Paginação
-    paginator = Paginator(pergunta, 4)
-    page = request.GET.get('p')
-    pergunta = paginator.get_page(page)
-
-    # data['resolvidas'] = resolvidas
-    data['perguntas'] = pergunta
     data['resposta'] = resposta
-    data['count'] = count
     data['materia'] = materia
     data['variavel'] = banca
     return render(request, 'perguntas_templates/index.html', data)

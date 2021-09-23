@@ -1,13 +1,15 @@
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from time import sleep
 
-# [{'user': 'kroos@gmail.com', 'password': 'Kros1234'}, {'user': 'bezema@gmail.com', 'password': 'Bezema1234'}, {'user': 'ramos@gmail.com', 'password': 'Ramos1234'}, {'user': 'nacho@gmail.com', 'password': 'Nacho1234'}, {'user': 'varame@gmail.com', 'password': 'Varame1234'}, {'user': 'bale@gmail.com', 'password': 'Bale1234'}, {'user': 'casemiro@gmail.com', 'password': 'Casemiro1234'}, {'user': 'isco@gmail.com', 'password': 'Isco1234'}]
+[{'user': 'kroos@gmail.com', 'password': 'Kros1234'}, {'user': 'bezema@gmail.com', 'password': 'Bezema1234'}, {'user': 'ramos@gmail.com', 'password': 'Ramos1234'}, {'user': 'nacho@gmail.com', 'password': 'Nacho1234'}, {'user': 'varame@gmail.com', 'password': 'Varame1234'}, {'user': 'bale@gmail.com', 'password': 'Bale1234'}, {'user': 'casemiro@gmail.com', 'password': 'Casemiro1234'}, {'user': 'isco@gmail.com', 'password': 'Isco1234'}]
 
 # Código para testar tela de cadastro adicionando usuarios ficticios 
 class testeRegister:
     def __init__(self):
-        self.navegador = webdriver.Firefox()
-
+        self.firefox = Options()
+        self.firefox.add_argument("-headless")
+        self.navegador = webdriver.Firefox(options=self.firefox)
     def acessaRegister(self, site):
         self.navegador.get(site)
 
@@ -37,14 +39,14 @@ if __name__ == '__main__':
         dicionario_login.clear()
 
         register = testeRegister()
-        register.acessaRegister("http://127.0.0.1:8000/accounts/register/")
+        register.acessaRegister(str(input('Link: ')))
 
         for key, value in dados.items():
             register.registerUser(key, value)
         
         sleep(2)
         register.button_cadastrar()
-        print(f'Usuário {dados["nome"]} {dados["Snome"]} adicionado com suceso')
+        print(f'Usuário {dados["nome"]} {dados["Snome"]} adicionado com sucesso')
         sleep(3)
         register.sair()
     
@@ -54,3 +56,4 @@ if __name__ == '__main__':
     print('')
     print("=>" * 10, "Lista para login gerada", "=>" * 10)
     print(lista_login)
+
