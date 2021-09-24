@@ -69,12 +69,24 @@ main {
 }
 
 .user input:focus {
-  border-bottom: 1px solid rgba(0, 255, 255, 0.452);
+  border-bottom: 1px solid rgba(79, 202, 202, 0.452);
 }
 
 .user #hide {
   margin-left: -24px;
   cursor: pointer;
+}
+/* Cor de fundo do autocomplete */
+input:-webkit-autofill {
+  border-bottom: 1px solid grey;
+  color: white;
+  -webkit-text-fill-color: #fff;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Cor do texto do autocomplete */
+input:-webkit-autofill {
+  -webkit-text-fill-color: #fff !important;
 }
 
 .box .reset-password {
