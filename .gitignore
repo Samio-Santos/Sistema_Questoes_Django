@@ -1,8 +1,10 @@
+db.sqlite3
 htmlcov/*
+midias_users/fotoPerfil/*
 .vscode/*
 .venv/*
 .coverage
 .coveragerc
-archive.py
-questoes_nao_resolvidas.html
-__pycahce__
+*archive.py
+__pycahce__/*
+*login1.css
