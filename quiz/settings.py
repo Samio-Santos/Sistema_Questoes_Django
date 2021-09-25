@@ -229,3 +229,9 @@ DEFAULT_FROM_EMAIL = 'Simulados team'
 # Configuração Django-Summernote
 INSTALLED_APPS += ('django_summernote',)
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+
+# SECURE_PROXY_SSL_HEADER = None
+# SECURE_SSL_REDIRECT = None
+# SESSION_COOKIE_SECURE = None
+# CSRF_COOKIE_SECURE = None
