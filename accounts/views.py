@@ -11,6 +11,9 @@ from .models import CostumerUser
 from respostas.models import Resposta
 from perguntas.models import Pergunta
 
+from django_pdfkit import PDFView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 def login(request):
     if request.method != 'POST':
         return render(request, 'accounts_templates/login.html')
@@ -148,7 +151,6 @@ def perfil_usuario(request, id):
 
     data['user'] = user
     data['form'] = form
-
     return render(request, 'accounts_templates/perfil_user.html', data)
 
 
@@ -158,3 +160,51 @@ def locked(request):
 def Reset_Password_Complete(request):
     messages.success(request, 'Sua senha foi redefinida com SUCESSO!')
     return redirect('login')
+
+class pdfview(LoginRequiredMixin, PDFView):
+    login_url = 'login'
+    template_name = 'accounts_templates/relatorio.html'
+    
+    def get_filename(self):
+        user = self.request.user.first_name
+        qs = super().get_filename()
+        qs = f'relatorio_{user}'
+        return qs
+
+    def render_html(self, *args, **kwargs):
+        user = self.request.user
+        kwargs['user'] = user
+        kwargs['resposta'] = Resposta.objects.filter(usuario=user)
+
+        # listas para armazena as respostas certas e erradas de CADA materia 
+        # para exibir no gráfico estatistico de barra
+        portugues_certas = []
+        portugues_erradas = []
+        informatica_certas = []
+        informatica_erradas = []
+        logica_certas = []
+        logica_erradas = []
+        estatistica_certas = []
+        estatistica_erradas = []
+        direito_certas = []
+        direito_erradas = []
+        contabilidade_certas = []
+        contabilidade_erradas = []
+        criminologia_certas = []
+        criminologia_erradas = []
+
+        for pergunta in Pergunta.objects.all():
+            for respondida in Resposta.objects.filter(usuario=user):
+                if pergunta == respondida.resposta_pergunta:
+                    if pergunta.alternativas_correta == respondida.resposta_usuario:
+
+                        get_resposta_certas_dashboard(respondida, portugues_certas, informatica_certas, logica_certas,  estatistica_certas, direito_certas, contabilidade_certas, criminologia_certas, kwargs)
+                    else:
+                        get_resposta_erradas_dashboard(respondida, portugues_erradas, informatica_erradas, logica_erradas, estatistica_erradas, direito_erradas, contabilidade_erradas, criminologia_erradas, kwargs)
+
+        context = super().render_html(*args, **kwargs)
+
+        return context
+
+
+

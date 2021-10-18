@@ -173,7 +173,7 @@ class PerfilViewTestcase(TestCase):
 
 
 
-    def test_idUrl_Perfil_usuario(self):
+    def test_Url_Perfil_usuario(self):
         self.cliente.post(f'/accounts/perfil/2/')
 
     def test_methodPost_Perfil_usuario(self):
@@ -182,3 +182,18 @@ class PerfilViewTestcase(TestCase):
     def test_perfil(self):
         self.cliente.post(self.urlPerfil, data=self.dados)
 
+class lockedViewTestcase(TestCase):
+    def setUp(self):
+        self.cliente = Client()
+
+    # depois de 5 tentativas erradas do usuario o usuario é bloqueado.
+    def test_tela_bloqueio_usuario(self):
+        self.cliente.post(reverse_lazy('locked'))
+        
+class Reset_Password_CompleteViewTestcase(TestCase):
+    def setUp(self):
+        self.cliente = Client()
+
+    # depois de 5 tentativas erradas do usuario o usuario é bloqueado.
+    def test_password_reset_complete(self):
+        self.cliente.post(reverse_lazy('password_reset_complete'))

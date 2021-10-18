@@ -20,7 +20,7 @@ def questoes_resolvidas(request, materia):
         resposta_pergunta__materia__materia=materia,
         respondida=True
     )
-       
+
     # Conta o total de questões resolvidas da materia
     count = resolvidas.count()
     

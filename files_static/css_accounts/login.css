@@ -77,7 +77,7 @@ main {
   cursor: pointer;
 }
 /* Cor de fundo do autocomplete */
-input:-webkit-autofill {
+.user input:-webkit-autofill {
   border-bottom: 1px solid grey;
   color: white;
   -webkit-text-fill-color: #fff;
@@ -85,7 +85,7 @@ input:-webkit-autofill {
 }
 
 /* Cor do texto do autocomplete */
-input:-webkit-autofill {
+.user input:-webkit-autofill {
   -webkit-text-fill-color: #fff !important;
 }
 

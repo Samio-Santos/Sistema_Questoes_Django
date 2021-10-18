@@ -1,8 +1,6 @@
 from django.core.validators import validate_email
 from django.contrib import messages
 from .models import CostumerUser
-from django.shortcuts import render
-
 
 def get_validacao_dados_register(**kwargs):
     request = kwargs.get('request')

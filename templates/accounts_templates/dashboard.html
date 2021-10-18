@@ -155,6 +155,12 @@
             </button>
           </div>
         </div>
+
+        <div class="container-pdf">   
+          <div class="box-pdf">
+            <a class="button1" href="{% url 'my-pdf' %}" target="blank">Gerar relatorio em PDF</a>
+          </div>       
+        </div>
       </section>
       <aside class="aside" style="display: none">
         <div class="graphic">
@@ -195,6 +201,9 @@
           >
             Zerar questões resolvidas
           </button>
+          
+          <a class="button2" href="{% url 'my-pdf' %}" target="blank">Gerar relatorio em PDF</a>
+
         </div>
 
         <div id="id01" class="modal">

@@ -154,6 +154,7 @@ section {
 
 section .container-result,
 section .container-delete,
+section .container-pdf,
 section .container-user {
   display: block;
   width: 90%;
@@ -192,7 +193,8 @@ section .container-user .perfil p {
 }
 
 section .container-result .questions,
-section .container-delete .box-delete {
+section .container-delete .box-delete,
+section .container-pdf .box-pdf {
   display: block;
   text-align: center;
 }
@@ -209,14 +211,16 @@ section .container-result .questions span {
 }
 
 section .container-result .questions p,
-section .container-delete .box-delete p {
+section .container-delete .box-delete p,
+section .container-pdf .box-pdf a {
   font-size: 17px;
   color: black;
   font-weight: bold;
   margin-top: 1rem;
 }
 
-section .container-delete .box-delete .button1 {
+section .container-delete .box-delete .button1,
+section .container-pdf .box-pdf {
   background-color: transparent;
   color: black;
   font-size: 18px;
@@ -448,7 +452,8 @@ aside .graphic1 .button2:hover {
     display: inline-block;
   }
 
-  section .container-delete {
+  section .container-delete,
+  section .container-pdf {
     display: none;
   }
 
@@ -467,6 +472,8 @@ aside .graphic1 .button2:hover {
     background-color: black;
     color: white;
     padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
     margin: 0 auto;
     margin-top: 30px;
     border: none;

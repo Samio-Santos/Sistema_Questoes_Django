@@ -4,7 +4,7 @@ from accounts.form import EmailValidationPassword
 from .views import (
     login, logout, locked, register, 
     dashboard, Reset_Password_Complete, 
-    perfil_usuario
+    perfil_usuario, pdfview
     )
 
 urlpatterns = [
@@ -33,4 +33,7 @@ urlpatterns = [
     name='password_reset_confirm'),
 
     path('reset_password_complete/', Reset_Password_Complete, name='password_reset_complete'),
+
+    path('relatorio-pdf/', pdfview.as_view(), name='my-pdf')
 ]
+

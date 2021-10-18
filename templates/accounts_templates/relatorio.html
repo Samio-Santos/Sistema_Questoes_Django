@@ -1,0 +1,104 @@
+{% load static %}
+{% load filters %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relatorio Samio Santos</title>
+    <link rel="icon" href="{% static 'img/universidade.png' %}" />
+    <link rel="stylesheet" href="{% static 'css_accounts/relatorio.css' %}" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>Relatório {{user.first_name}} {{user.last_name}}</h1>
+        <hr />
+        <header>
+          <img
+            src="{% static 'img/logo-universidade.png' %} "
+            alt="logo-relatorio"
+          />
+
+          <div class="container-header">
+            {% if user.imagem %}
+            <img class="img-perfil" src="{{user.imagem.url}}" alt="foto-perfil" />
+            {% else %}
+              {% if user.sexo == "Masculino" %}
+                <img class="img-perfil" src="{% static 'img/avatar_masculino.jpg' %}" alt="foto-perfil" />
+              
+              {% elif user.sexo == "Feminino" %}
+                <img class="img-perfil" src="{% static 'img/avatar_feminino.jpg' %}" alt="foto-perfil" />
+              {% endif %}
+            {% endif %}
+
+            <p>Nome: <span>{{user.first_name}} {{user.last_name}}</span></p>
+
+            <p>Email: <span>{{user.email}}</span></p>
+
+            <p>Sexo: <span>{{user.sexo}}</span></p>
+          </div>
+        </header>
+        <hr />
+
+        <div class="container-matter">
+          {% if not resposta %}
+            <p>Relatorio sem dados até o momento...</p>
+            <p>{{user.first_name}} {{user.last_name}} ainda não respondeu nem uma pergunta.</p>
+          {% else %}
+            <p>
+              Português:
+              <span id="hit">Acertos {{portugues_certas|zero}}</span>
+              <img src="{% static 'img/verificacao-verde.png' %}" alt="certo" />
+              | <span id="erro">Erros {{portugues_erradas|zero}}</span>
+              <img src="{% static 'img/verificacao-vermelho.png' %}" alt="errado" />
+            </p>
+            <p>
+              Informática:
+              <span id="hit">Acertos {{informatica_certas|zero}}</span>
+              <img src="{% static 'img/verificacao-verde.png' %}" alt="certo" />
+              | <span id="erro">Erros {{informatica_erradas|zero}}</span>
+              <img src="{% static 'img/verificacao-vermelho.png' %}" alt="errado" />
+            </p> 
+            <p>
+              Lógica:
+              <span id="hit">Acertos {{logica_certas|zero}}</span>
+              <img src="{% static 'img/verificacao-verde.png' %}" alt="certo" />
+              | <span id="erro">Erros {{logica_erradas|zero}}</span>
+              <img src="{% static 'img/verificacao-vermelho.png' %}" alt="errado" />
+            </p> 
+            <p>
+              Estatística:
+              <span id="hit">Acertos {{estatistica_certas|zero}}</span>
+              <img src="{% static 'img/verificacao-verde.png' %}" alt="certo" />
+              | <span id="erro">Erros {{estatistica_erradas|zero}}</span>
+              <img src="{% static 'img/verificacao-vermelho.png' %}" alt="errado" />
+            </p>
+            <p>
+              Direito:
+              <span id="hit">Acertos {{direito_certas|zero}}</span>
+              <img src="{% static 'img/verificacao-verde.png' %}" alt="certo" />
+              | <span id="erro">Erros {{direito_erradas|zero}}</span>
+              <img src="{% static 'img/verificacao-vermelho.png' %}" alt="errado" />
+            </p>
+            <p>
+              Contabilidade:
+              <span id="hit">Acertos {{contabilidade_certas|zero}}</span>
+              <img src="{% static 'img/verificacao-verde.png' %}" alt="certo" />
+              | <span id="erro">Erros {{contabilidade_erradas|zero}}</span>
+              <img src="{% static 'img/verificacao-vermelho.png' %}" alt="errado" />
+            </p>
+            <p>
+              Criminologia:
+              <span id="hit">Acertos {{criminologia_certas|zero}}</span>
+              <img src="{% static 'img/verificacao-verde.png' %}" alt="certo" />
+              | <span id="erro">Erros {{criminologia_erradas|zero}}</span>
+              <img src="{% static 'img/verificacao-vermelho.png' %}" alt="errado" />
+            </p>
+          {% endif %}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'perguntas',
     'respostas',
     'social_django',
+    'accounts.templatetags.filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -235,3 +236,5 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 # SECURE_SSL_REDIRECT = None
 # SESSION_COOKIE_SECURE = None
 # CSRF_COOKIE_SECURE = None
+
+WKHTMLTOPDF_BIN = '/path/to/wkhtmltopdf ./manage.py runserver'
