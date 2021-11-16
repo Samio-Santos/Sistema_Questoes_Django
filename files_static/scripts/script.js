@@ -152,10 +152,7 @@ document.querySelectorAll("#id_pergunta").forEach((id_pergunta) => {
   if (questoes_respondidas == null) {
     //pass
   } else {
-    if (
-      questoes_respondidas.value == "True" &&
-      banca.value == "Cespe"
-    ) {
+    if (questoes_respondidas.value == "True" && banca.value == "Cespe") {
       certo = document.querySelector(`#certo${id}`);
       errado = document.querySelector(`#errado${id}`);
 
@@ -449,8 +446,9 @@ if (document.querySelector(".img-perfil") && document.getElementById("file")) {
   });
 }
 
-
 if (document.querySelector(".alert-errorinput")) {
-  input_username = document.querySelector('#username').style.borderBottom = "1px solid red"
-  input_password = document.querySelector('#password').style.borderBottom = "1px solid red"
+  input_username = document.querySelector("#username").style.borderBottom =
+    "1px solid red";
+  input_password = document.querySelector("#password").style.borderBottom =
+    "1px solid red";
 }

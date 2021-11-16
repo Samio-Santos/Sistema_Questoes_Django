@@ -7,6 +7,7 @@ from respostas.models import Resposta
 from .models import Pergunta
 from random import shuffle
 from perguntas.facad import *
+# from django.db import connection
 
 
 @login_required(redirect_field_name='#usu@rio$',login_url='login')

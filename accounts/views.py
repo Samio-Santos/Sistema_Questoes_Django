@@ -14,6 +14,8 @@ from perguntas.models import Pergunta
 from django_pdfkit import PDFView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+# from django.db import connection
+
 def login(request):
     if request.method != 'POST':
         return render(request, 'accounts_templates/login.html')
@@ -112,8 +114,11 @@ def dashboard(request):
         usuario=user
     ).count()
 
+    # Acessa o model RESPOSTA
+    model_resposta = Resposta.objects.filter(usuario=user).select_related("resposta_pergunta")
+
     for pergunta in Pergunta.objects.all():
-        for respondida in Resposta.objects.filter(usuario=user):
+        for respondida in model_resposta:
             if pergunta == respondida.resposta_pergunta:
                 if pergunta.alternativas_correta == respondida.resposta_usuario:
                     respostas_certas.append(respondida)
@@ -174,7 +179,7 @@ class pdfview(LoginRequiredMixin, PDFView):
     def render_html(self, *args, **kwargs):
         user = self.request.user
         kwargs['user'] = user
-        kwargs['resposta'] = Resposta.objects.filter(usuario=user)
+        kwargs['resposta'] = Resposta.objects.filter(usuario=user).select_related("resposta_pergunta")
 
         # listas para armazena as respostas certas e erradas de CADA materia 
         # para exibir no gráfico estatistico de barra
@@ -194,7 +199,7 @@ class pdfview(LoginRequiredMixin, PDFView):
         criminologia_erradas = []
 
         for pergunta in Pergunta.objects.all():
-            for respondida in Resposta.objects.filter(usuario=user):
+            for respondida in kwargs['resposta']:
                 if pergunta == respondida.resposta_pergunta:
                     if pergunta.alternativas_correta == respondida.resposta_usuario:
 
