@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-zp0zy!vqe=d08588vg%1m@myhx_&l3c#jqpyn4x^doq4--6ye%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "*"]
 
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'axes',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 AUTH_USER_MODEL = 'accounts.CostumerUser'
@@ -60,7 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'axes.middleware.AxesMiddleware',
+    # 'axes.middleware.AxesMiddleware',
 
 ]
 
@@ -89,9 +91,13 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+  'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Samio$django_SistemaQuestoes',
+        'HOST': 'Samio.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
+        'USER': 'Samio',
+        'PASSWORD': 'S@@my4667',
     }
 }
 
@@ -134,7 +140,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'static'
+STATIC_ROOT = '/home/Samio/Sistema_Questoes_Django/static'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "files_static"),)
 
@@ -201,18 +207,18 @@ LOGOUT_REDIRECT_URL = '/'
 # Defini o limite de tentativas do usuario
 AXES_FAILURE_LIMIT = 5
 
-# # AXES_ENABLE_ADMIN = True
+# # # AXES_ENABLE_ADMIN = True
 
-# Bloqueia com base no nome do usuario
+# # Bloqueia com base no nome do usuario
 AXES_ONLY_USER_FAILURES = True
 
-# redefini o numero de tentativas após UMA tentativa bem-sucedida
+# # redefini o numero de tentativas após UMA tentativa bem-sucedida
 AXES_RESET_ON_SUCCESS = True
 
-# Defini o tempo de bloqueio
+# # Defini o tempo de bloqueio
 AXES_COOLOFF_TIME = timedelta(minutes=30)
 
-# redireciona o usuario para este template quando bloqueado
+# # redireciona o usuario para este template quando bloqueado
 AXES_LOCKOUT_TEMPLATE = 'accounts_templates/locked.html'
 
 
@@ -236,5 +242,6 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 # SECURE_SSL_REDIRECT = None
 # SESSION_COOKIE_SECURE = None
 # CSRF_COOKIE_SECURE = None
+
 
 WKHTMLTOPDF_BIN = '/path/to/wkhtmltopdf ./manage.py runserver'

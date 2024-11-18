@@ -89,12 +89,14 @@
       <section class="secao" style="display: none">
         {% if messages %}
           {% for message in messages %}
-            <div class="{{ message.tags }}" role="alert">
+            <div class="notification">
               {{ message }}
+              <span class="notification-progress"></span>
             </div>
           {% endfor %}
         {% endif %}
-        <div class="container-user">
+        
+          <div class="container-user">
           <div class="perfil">
             {% if user.imagem %}
               <img src="{{user.imagem.url}}" alt="foto-perfil" />

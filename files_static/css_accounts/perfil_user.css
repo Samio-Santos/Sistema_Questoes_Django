@@ -27,6 +27,31 @@ header {
   text-decoration: none;
 }
 
+.btn-back {
+  position: absolute;
+  left: 80px;
+  margin-top: 15px;
+  background-color: #032841;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center; /* Alinha ícone e texto */
+}
+
+.btn-back:hover {
+  background-color: #03243bd6;
+}
+
+.btn-back i {
+  margin-right: 8px; /* Espaço entre ícone e texto */
+  font-size: 20px;
+}
+
 /* Main */
 form {
   font-family: sans-serif;
@@ -121,7 +146,7 @@ input:focus {
   border: 1.5px solid black;
 }
 
-button {
+.bnt-submit {
   width: 30%;
   background-color: black;
   color: white;
@@ -136,7 +161,7 @@ button {
   margin-left: 1rem;
 }
 
-button:hover {
+.bnt-submit:hover {
   background-color: rgba(0, 0, 0, 0.685);
 }
 
@@ -171,7 +196,7 @@ button:hover {
     margin-left: 97px;
   }
 
-  button {
+  .bnt-submit {
     width: 150px;
     margin-left: 89px;
   }

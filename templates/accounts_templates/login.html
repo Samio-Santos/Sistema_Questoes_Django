@@ -31,6 +31,16 @@
       <form action="{% url 'login' %}" method="POST" name="form-login">
         {% csrf_token %}
         <fieldset class="container">
+          {% if messages %}
+            {% for message in messages %}
+              {% if message.tags == "alert-success" %}
+                <div class="notification">
+                  {{ message }}
+                  <span class="notification-progress"></span>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
           <div class="box">
             <img id="icon" src="{% static 'img/user.png' %}" alt="Login" />
             <h1>Log In</h1>

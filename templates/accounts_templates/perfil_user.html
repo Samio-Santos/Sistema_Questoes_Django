@@ -30,6 +30,11 @@
     </header>
 
     <main>
+
+      <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+
       <form
         action="{% url 'perfil_user' user.id %}"
         method="POST"
@@ -90,7 +95,7 @@
           {{ form.biografia }}
         </div>
 
-        <button type="submit">Salvar</button>
+        <button class="bnt-submit" type="submit">Salvar</button>
       </form>
     </main>
     

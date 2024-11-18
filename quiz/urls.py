@@ -19,7 +19,20 @@ from django.conf import settings
 from django.conf.urls.static import static
 from accounts.views import dashboard
 
+from perguntas.api.viewsets import PerguntaAllViewSet, PerguntaInformaticaViewSet, PerguntaLogicaViewSet, PerguntaDireitoViewSet
+
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register('question-all', PerguntaAllViewSet, basename='Pergunta'),
+router.register('question-computing', PerguntaInformaticaViewSet, basename='Pergunta-Informatica'),
+router.register('question-logica', PerguntaLogicaViewSet, basename='Pergunta-logica'),
+router.register('question-direito', PerguntaDireitoViewSet, basename='Pergunta-direito'),
+
 urlpatterns = [
+    path('api/v1/', include(router.urls)),
+
     path('', dashboard),
     path('accounts/', include('accounts.url')),
     path('questoes/', include('perguntas.url')),

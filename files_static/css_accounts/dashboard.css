@@ -374,16 +374,50 @@ aside .graphic1 .button2:hover {
 }
 
 /* Estilização para mensagem de "bem-vindo" e entre outras */
-.alert-success {
+.notification {
   text-align: center;
-  font-weight: bolder;
-  background-color: rgba(0, 128, 0, 0.233);
-  color: green;
-  width: 90%;
+  width: 65%;
+  margin: 5px auto;
   padding: 10px;
-  border-radius: 5px;
-  position: relative;
-  margin-bottom: 1rem;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #0d2741, #346793);
+  color: #f6f5f9;
+  /* box-shadow: 0 1px 10px rgba(0, 0, 0, 1); */
+  transform: translateY(30px);
+  opacity: 0;
+  visibility: hidden;
+  animation: fade-in 4s linear forwards;
+}
+
+.notification .notification-progress {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  width: calc(100% - 10px);
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background-image: linear-gradient(to right, #539bdb, #3250bf);
+  border-radius: inherit;
+  animation: load 3s 0.25s linear forwards;
+}
+
+@keyframes fade-in {
+  5% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes load {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* Change styles for cancel button and delete button on extra small screens */

@@ -5,6 +5,7 @@ body {
   background-attachment: fixed;
 }
 
+
 main {
   height: 100%;
   background-color: rgba(245, 245, 245, 0.705);
@@ -27,7 +28,8 @@ fieldset {
   font-weight: bolder;
 }
 
-.input-block input, .input-block select {
+.input-block input,
+.input-block select {
   padding: 10px;
   border: 1px solid black;
   border-radius: 4px;
@@ -35,7 +37,8 @@ fieldset {
   outline: none;
 }
 
-.input-block input:focus, .input-block select:focus {
+.input-block input:focus,
+.input-block select:focus {
   border: 1.5px solid black;
 }
 
@@ -85,7 +88,6 @@ form button:hover {
   position: relative;
   padding: 20px;
   margin-top: 10px;
-
 }
 
 #Valid-password p {
@@ -116,12 +118,14 @@ form button:hover {
 }
 
 @media (min-width: 700px) {
-  .input-block, .alert-error {
+  .input-block,
+  .alert-error {
     margin-left: 150px;
     margin-top: 20px;
   }
 
-  .input-block input, .input-block select{
+  .input-block input,
+  .input-block select {
     width: 65%;
   }
 
