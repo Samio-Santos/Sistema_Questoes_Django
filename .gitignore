@@ -1,5 +1,6 @@
 db.sqlite3
 htmlcov/*
+static/
 midias_users/fotoPerfil/*
 .vscode/*
 .venv/*
