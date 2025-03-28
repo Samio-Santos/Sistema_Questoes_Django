@@ -3,10 +3,8 @@
 # Para o script em caso de erro
 set -e  
 
-# Desfaz alterações locais no deploy.sh
-git checkout -- deploy.sh
-
-# Atualiza o código
+# Desfaz alterações locais e reseta para a versão remota
+git reset --hard HEAD
 git pull origin main
 
 # Constrói e recria os containers
