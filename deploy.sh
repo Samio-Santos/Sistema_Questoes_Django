@@ -13,11 +13,11 @@ docker-compose build
 docker-compose up -d
 
 # Aplica migrações dentro do container Django
-docker exec -it sistema_container python manage.py makemigrations
-docker exec -it sistema_container python manage.py migrate
+docker exec sistema_container python manage.py makemigrations
+docker exec sistema_container python manage.py migrate
 
 # Coleta arquivos estáticos
-docker exec -it sistema_container python manage.py collectstatic --noinput
+docker exec sistema_container python manage.py collectstatic --noinput
 
 # Reinicia os containers
 docker-compose restart
