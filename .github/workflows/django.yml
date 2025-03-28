@@ -72,8 +72,15 @@ jobs:
         eval "$(ssh-agent -s)"
         ssh-add ~/.ssh/deploy_key
         
-        # Copia os arquivos para o servidor
-        scp -o StrictHostKeyChecking=no deploy.sh $EC2_USER@$EC2_HOST:~/
+        # Copia os arquivos para o servidor remoto
+        scp -o StrictHostKeyChecking=no deploy.sh $EC2_USER@$EC2_HOST:/home/ubuntu/Sistema_Questoes_Django/
         
-        # Executa o script de deploy
-        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST 'chmod +x ~/deploy.sh && ~/deploy.sh'
+        # Executa o script de deploy no servidor remoto
+        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
+          # Muda para o diretório do projeto no servidor remoto
+          cd /home/ubuntu/Sistema_Questoes_Django
+          
+          # Executa o script de deploy
+          chmod +x ~/deploy.sh
+          ~/deploy.sh
+        EOF
