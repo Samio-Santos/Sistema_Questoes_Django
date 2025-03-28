@@ -10,26 +10,28 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 from django.contrib.messages import constants
-import os
-from archive import SECRET_KEY_GITHUB, SECRET_KEY_GOOGLE
+from dotenv import load_dotenv
+
+# Carrega as variáveis do .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zp0zy!vqe=d08588vg%1m@myhx_&l3c#jqpyn4x^doq4--6ye%'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     'axes',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 AUTH_USER_MODEL = 'accounts.CostumerUser'
@@ -66,13 +69,13 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.AxesMiddleware',
-
 ]
 
 ROOT_URLCONF = 'quiz.urls'
@@ -88,6 +91,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -99,13 +104,23 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -142,17 +157,28 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")  # Mantendo como 'static', conforme sua estrutura
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "files_static"),  # Caso tenha arquivos adicionais
-]
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'files_static')]
 
 
 # Para o usuario poder adicionar mídias, fazer as configurações abaixo.
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join (BASE_DIR, 'midias_users/')
+INSTALLED_APPS += ['storages']
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -171,11 +197,7 @@ MESSAGE_TAGS = {
 
 # Configuração rede social
 AUTHENTICATION_BACKENDS = (
-    'accounts.backend.EmailUserBackend',
-    'axes.backends.AxesBackend',
-    'social_core.backends.github.GithubOAuth2',
     'social_core.backends.google.GoogleOAuth2',
-
     'django.contrib.auth.backends.ModelBackend',
 )
 #### Configurações social auth ####
@@ -197,12 +219,12 @@ SOCIAL_AUTH_FACEBOOK_KEY = '*******************'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'SECRET_KEY_FACEBOOK'
 
 # Autenticação pelo Github
-SOCIAL_AUTH_GITHUB_KEY = '3f2a1a544682c1172c98'
-SOCIAL_AUTH_GITHUB_SECRET = SECRET_KEY_GITHUB
+SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SECRET_KEY_GITHUB')
 
 # Autenticação pelo Google
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '60211194618-2opsll46d29uc51nu20nvuevlkvsb58t.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SECRET_KEY_GOOGLE
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -210,7 +232,7 @@ LOGOUT_REDIRECT_URL = '/'
 ##### CONFIGURAÇÕES DO DO AXE #####
 
 # Defini o limite de tentativas do usuario
-AXES_FAILURE_LIMIT = 5
+AXES_FAILURE_LIMIT = 3
 
 # # AXES_ENABLE_ADMIN = True
 
@@ -249,3 +271,8 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 # CSRF_COOKIE_SECURE = None
 
 WKHTMLTOPDF_BIN = '/path/to/wkhtmltopdf ./manage.py runserver'
+
+# Axes Configuration
+AXES_LOCK_OUT_AT_FAILURE = True
+AXES_LOCK_OUT_BY_IP_OR_USERNAME = True
+AXES_LOCK_OUT_BY_COMBINATION_USERNAME_AND_IP = True

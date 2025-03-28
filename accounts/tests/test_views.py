@@ -1,8 +1,7 @@
 from django import urls
 from django.db import router
-from django.test import TestCase
-from django.test import Client
-from django.urls import reverse_lazy
+from django.test import TestCase, Client, RequestFactory
+from django.urls import reverse_lazy, reverse
 from django.urls.conf import path
 from categorias.models import *
 from accounts.models import CostumerUser
@@ -11,6 +10,7 @@ from respostas.models import Resposta
 from perguntas.models import Pergunta
 from social_django.models import UserSocialAuth
 from model_mommy import mommy
+from django.contrib.auth import get_user_model
 
 
 class LoginViewTestcase(TestCase):
@@ -116,33 +116,30 @@ class RegisterViewTestcase(TestCase):
     
 
 class DashboardViewTestcase(TestCase):
-
     def setUp(self):
-        self.cliente = Client()
-
-        self.banca = Banca.objects.create(banca='Cespe')
-
-        self.materia = Materia.objects.create(materia='Logica')
+        self.client = Client()
+        self.factory = RequestFactory()
         
-        self.user = CostumerUser.objects.create_user(username='bale@gmail.com', email='bale@gmail.com', password='bale1234')
-
-        self.pergunta1 = Pergunta.objects.create(enunciado='abcde', alternativas_correta='Certo', materia=self.materia, banca=self.banca, disponivel=True)
-
-        self.resposta1 = Resposta.objects.create(usuario=self.user, resposta_pergunta=self.pergunta1, resposta_usuario='Certo', materia=self.materia.materia, banca=self.banca.banca, respondida=True)
-
-        self.pergunta2= Pergunta.objects.create(enunciado='abcdefghikl', alternativas_correta='Certo', materia=self.materia, banca=self.banca, disponivel=True)
-
-        self.resposta2 = Resposta.objects.create(usuario=self.user, resposta_pergunta=self.pergunta2, resposta_usuario='A', materia=self.materia.materia, banca=self.banca.banca, respondida=True)
-
-        self.validos = {
-            'user': 'bale@gmail.com',
-            'password': 'bale1234'
-        }
-
-        self.cliente.post(reverse_lazy('login'), self.validos)
+        # Criar usuário
+        self.user = get_user_model().objects.create_user(
+            username='testuser',
+            email='test@test.com',
+            password='testpass123'
+        )
+        
+        # Criar matéria (se necessário para o teste)
+        self.materia = Materia.objects.create(materia='Português')
 
     def test_dashboard(self):
-        self.cliente.post(reverse_lazy('dashboard'))
+        request = self.factory.get(reverse('dashboard'))
+        self.client.login(
+            username='testuser',
+            password='testpass123',
+            request=request
+        )
+        response = self.client.get(reverse('dashboard'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts_templates/dashboard.html')
 
 
 class PerfilViewTestcase(TestCase):

@@ -14,128 +14,99 @@
   </nav>
   {% if materia == 'Português' %}
   <div class="dropdown-filter" id="myfilter">
-    <a href="{% url 'categoria_materia' 'Português' %}">
+    <a href="{% url 'perguntas:categoria_materia' 'Português' %}">
       Todas as questões de {{materia}}
     </a>
 
-    <a href="{% url 'resolvidas' 'Português' %}"> Resolvidas </a>
+    <a href="{% url 'perguntas:nao_resolvidas' 'Português' %}"> Não Resolvidas </a>
 
-    <a href="{% url 'nao_resolvidas' 'Português' %}"> Não Resolvidas </a>
+    <a href="{% url 'perguntas:filtro_banca' 'Cespe' 'Português' %}">Questões Cespe/cebraspe</a>
 
-    <a href="{% url 'filtro_banca' 'Cespe' 'Português' %}"
-      >Questões Cespe/cebraspe</a
-    >
+    <a href="{% url 'perguntas:filtro_banca' 'Vunesp' 'Português' %}">Questões Vunesp</a>
 
-    <a href="{% url 'filtro_banca' 'Vunesp' 'Português' %}">Questões Vunesp</a>
+    <a href="{% url 'respostas:certas' 'certas' 'Português' %}">Questões certas</a>
 
-    <a href="{% url 'certas' 'certas' 'Português' %}">Questões certas</a>
-
-    <a href="{% url 'certas' 'erradas' 'Português' %}">Questões erradas</a>
+    <a href="{% url 'respostas:certas' 'erradas' 'Português' %}">Questões erradas</a>
   </div>
 
   {% elif materia == 'Informática' %}
   <div class="dropdown-filter" id="myfilter">
-    <a href="{% url 'categoria_materia' 'Informática' %}">
+    <a href="{% url 'perguntas:categoria_materia' 'Informática' %}">
       Todas as questões de {{materia}}
     </a>
 
-    <a href="{% url 'resolvidas' 'Informática' %}"> Resolvidas </a>
+    <a href="{% url 'perguntas:nao_resolvidas' 'Informática' %}"> Não Resolvidas </a>
 
-    <a href="{% url 'nao_resolvidas' 'Informática' %}"> Não Resolvidas </a>
+    <a href="{% url 'perguntas:filtro_banca' 'Cespe' 'Informática' %}">Questões Cespe/cebraspe</a>
 
-    <a href="{% url 'filtro_banca' 'Cespe' 'Informática' %}"
-      >Questões Cespe/cebraspe</a
-    >
-
-    <a href="{% url 'filtro_banca' 'Vunesp' 'Informática' %}"
-      >Questões Vunesp</a
-    >
+    <a href="{% url 'perguntas:filtro_banca' 'Vunesp' 'Informática' %}">Questões Vunesp</a>
   </div>
 
   {% elif materia == 'Lógica' %}
   <div class="dropdown-filter" id="myfilter">
-    <a href="{% url 'categoria_materia' 'Lógica' %}">
+    <a href="{% url 'perguntas:categoria_materia' 'Lógica' %}">
       Todas as questões de {{materia}}
     </a>
 
-    <a href="{% url 'resolvidas' 'Lógica' %}"> Resolvidas </a>
+    <a href="{% url 'perguntas:nao_resolvidas' 'Lógica' %}"> Não Resolvidas </a>
 
-    <a href="{% url 'nao_resolvidas' 'Lógica' %}"> Não Resolvidas </a>
+    <a href="{% url 'perguntas:filtro_banca' 'Cespe' 'Lógica' %}">Questões Cespe/cebraspe</a>
 
-    <a href="{% url 'filtro_banca' 'Cespe' 'Lógica' %}"
-      >Questões Cespe/cebraspe</a
-    >
-
-    <a href="{% url 'filtro_banca' 'Vunesp' 'Lógica' %}">Questões Vunesp</a>
+    <a href="{% url 'perguntas:filtro_banca' 'Vunesp' 'Lógica' %}">Questões Vunesp</a>
   </div>
   {% elif materia == 'Estatística' %}
   <div class="dropdown-filter" id="myfilter">
-    <a href="{% url 'categoria_materia' 'Estatística' %}">
+    <a href="{% url 'perguntas:categoria_materia' 'Estatística' %}">
       Todas as questões de {{materia}}
     </a>
 
-    <a href="{% url 'resolvidas' 'Estatística' %}"> Resolvidas </a>
+    <a href="{% url 'respostas:resolvidas' 'Estatística' %}"> Resolvidas </a>
 
-    <a href="{% url 'nao_resolvidas' 'Estatística' %}"> Não Resolvidas </a>
-    <a href="{% url 'filtro_banca' 'Cespe' 'Estatística' %}"
-      >Questões Cespe/cebraspe</a
-    >
+    <a href="{% url 'perguntas:nao_resolvidas' 'Estatística' %}"> Não Resolvidas </a>
+    <a href="{% url 'perguntas:filtro_banca' 'Cespe' 'Estatística' %}">Questões Cespe/cebraspe</a>
 
-    <a href="{% url 'filtro_banca' 'Vunesp' 'Estatística' %}"
-      >Questões Vunesp</a
-    >
+    <a href="{% url 'perguntas:filtro_banca' 'Vunesp' 'Estatística' %}">Questões Vunesp</a>
   </div>
 
   {% elif materia == 'Direito' %}
   <div class="dropdown-filter" id="myfilter">
-    <a href="{% url 'categoria_materia' 'Direito' %}">
+    <a href="{% url 'perguntas:categoria_materia' 'Direito' %}">
       Todas as questões de {{materia}}
     </a>
 
-    <a href="{% url 'resolvidas' 'Direito' %}"> Resolvidas </a>
+    <a href="{% url 'respostas:resolvidas' 'Direito' %}"> Resolvidas </a>
 
-    <a href="{% url 'nao_resolvidas' 'Direito' %}"> Não Resolvidas </a>
+    <a href="{% url 'perguntas:nao_resolvidas' 'Direito' %}"> Não Resolvidas </a>
 
-    <a href="{% url 'filtro_banca' 'Cespe' 'Direito' %}"
-      >Questões Cespe/cebraspe</a
-    >
+    <a href="{% url 'perguntas:filtro_banca' 'Cespe' 'Direito' %}">Questões Cespe/cebraspe</a>
 
-    <a href="{% url 'filtro_banca' 'Vunesp' 'Direito' %}">Questões Vunesp</a>
+    <a href="{% url 'perguntas:filtro_banca' 'Vunesp' 'Direito' %}">Questões Vunesp</a>
   </div>
   {% elif materia == 'Contabilidade' %}
   <div class="dropdown-filter" id="myfilter">
-    <a href="{% url 'categoria_materia' 'Contabilidade' %}">
+    <a href="{% url 'perguntas:categoria_materia' 'Contabilidade' %}">
       Todas as questões de {{materia}}
     </a>
 
-    <a href="{% url 'resolvidas' 'Contabilidade' %}"> Resolvidas </a>
+    <a href="{% url 'respostas:resolvidas' 'Contabilidade' %}"> Resolvidas </a>
 
-    <a href="{% url 'nao_resolvidas' 'Contabilidade' %}"> Não Resolvidas </a>
+    <a href="{% url 'perguntas:nao_resolvidas' 'Contabilidade' %}"> Não Resolvidas </a>
 
-    <a href="{% url 'filtro_banca' 'Cespe' 'Contabilidade' %}"
-      >Questões Cespe/cebraspe</a
-    >
+    <a href="{% url 'perguntas:filtro_banca' 'Cespe' 'Contabilidade' %}">Questões Cespe/cebraspe</a>
 
-    <a href="{% url 'filtro_banca' 'Vunesp' 'Contabilidade' %}"
-      >Questões Vunesp</a
-    >
+    <a href="{% url 'perguntas:filtro_banca' 'Vunesp' 'Contabilidade' %}">Questões Vunesp</a>
   </div>
   {% elif materia == 'Criminologia' %}
   <div class="dropdown-filter" id="myfilter">
-    <a href="{% url 'categoria_materia' 'Criminologia' %}">
+    <a href="{% url 'perguntas:categoria_materia' 'Criminologia' %}">
       Todas as questões de {{materia}}
     </a>
-    <a href="{% url 'resolvidas' 'Criminologia' %}"> Resolvidas </a>
 
-    <a href="{% url 'nao_resolvidas' 'Criminologia' %}"> Não Resolvidas </a>
+    <a href="{% url 'respostas:resolvidas' 'Criminologia' %}"> Resolvidas </a>
 
-    <a href="{% url 'filtro_banca' 'Vunesp' 'Criminologia' %}"
-      >Questões Vunesp</a
-    >
+    <a href="{% url 'perguntas:nao_resolvidas' 'Criminologia' %}"> Não Resolvidas </a>
 
-    <a href="{% url 'filtro_banca' 'Cespe' 'Criminologia' %}"
-      >Questões Cespe/cebraspe</a
-    >
+    <a href="{% url 'perguntas:filtro_banca' 'Vunesp' 'Criminologia' %}">Questões Vunesp</a>
   </div>
   {% endif %}
 </div>

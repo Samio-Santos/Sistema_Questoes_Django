@@ -34,37 +34,37 @@
           id="myInput"
           onkeyup="filterFunction()"
         />
-        <a href="{% url 'categoria_materia' 'Português' %}"
+        <a href="{% url 'perguntas:categoria_materia' 'Português' %}"
           >Português<img
             src="{% static 'img/livros-educativos.png' %}"
             alt="português"
         /></a>
-        <a href="{% url 'categoria_materia' 'Informática' %}"
+        <a href="{% url 'perguntas:categoria_materia' 'Informática' %}"
           >Informática<img
             src="{% static 'img/informatica.png' %}"
             alt="informatica"
         /></a>
-        <a href="{% url 'categoria_materia' 'Lógica' %}"
+        <a href="{% url 'perguntas:categoria_materia' 'Lógica' %}"
           >Lógica<img
             src="{% static 'img/pensamento-logico.png' %}"
             alt="logica"
         /></a>
-        <a href="{% url 'categoria_materia' 'Estatística' %}"
+        <a href="{% url 'perguntas:categoria_materia' 'Estatística' %}"
           >Estatística<img
             src="{% static 'img/estatisticas.png' %}"
             alt="estatisca"
         /></a>
-        <a href="{% url 'categoria_materia' 'Direito' %}"
+        <a href="{% url 'perguntas:categoria_materia' 'Direito' %}"
           >Direito<img
             src="{% static 'img/balanca-de-peso.png' %}"
             alt="direito"
         /></a>
-        <a href="{% url 'categoria_materia' 'Contabilidade' %}"
+        <a href="{% url 'perguntas:categoria_materia' 'Contabilidade' %}"
           >Contabilidade<img
             src="{% static 'img/contabilidade.png' %}"
             alt="contabilidade"
         /></a>
-        <a href="{% url 'categoria_materia' 'Criminologia' %}"
+        <a href="{% url 'perguntas:categoria_materia' 'Criminologia' %}"
           >Criminologia<img
             src="{% static 'img/criminologia.png' %}"
             alt="contabilidade"
@@ -218,7 +218,7 @@
           <form
             class="modal-content"
             method="POST"
-            action="{% url 'deletar_questoes_resolvidas' %}"
+            action="{% url 'perguntas:deletar_questoes_resolvidas' %}"
           >
             {% csrf_token %}
 

@@ -1,5 +1,7 @@
 from django.urls import path
-from respostas.views import questoes_certas_ou_erradas, questoes_resolvidas
+from .views import questoes_certas_ou_erradas, questoes_resolvidas
+
+app_name = 'respostas'
 
 urlpatterns = [
     path('questoes-resolvidas/<str:materia>', questoes_resolvidas, name='resolvidas'),

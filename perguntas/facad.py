@@ -35,19 +35,15 @@ def pergunta_respondida(lista_perguntas, materia, user):
     return lista_perguntas
 
 def filtro_banca_perguntas(request, banca, materia, data):
-    if banca == "Vunesp":
-        pergunta = Pergunta.objects.filter(
-            disponivel=True,
-            banca__banca__iexact=banca,
-            materia__materia__iexact=materia,
-        )
+    # Inicializa a variável pergunta com uma query vazia
+    pergunta = Pergunta.objects.none()
     
-    elif banca == "Cespe":
-        pergunta = Pergunta.objects.filter(
-            disponivel=True,
-            banca__banca__iexact=banca,
-            materia__materia__iexact=materia,
-        )
+    # Faz o filtro pela banca
+    pergunta = Pergunta.objects.filter(
+        disponivel=True,
+        banca__banca__iexact=banca,
+        materia__materia__iexact=materia,
+    )
     
     # Conta o total de questões resolvidas da materia
     count = pergunta.count()

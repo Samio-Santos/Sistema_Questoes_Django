@@ -36,7 +36,7 @@ urlpatterns = [
     path('', dashboard),
     path('accounts/', include('accounts.url')),
     path('questoes/', include('perguntas.url')),
-    path('resposta/', include('respostas.url')),
+    path('resposta/', include('respostas.url', namespace='respostas')),
     path('summernote/', include('django_summernote.urls')),
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('admin/', admin.site.urls),

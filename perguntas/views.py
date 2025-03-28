@@ -125,11 +125,14 @@ def filtro_banca(request, banca, materia):
     return render(request, 'perguntas_templates/index.html', data)
 
 # Zera as questoes resolvidas pelo usuario
+@login_required(redirect_field_name='#usu@rio$',login_url='login')
 def deletar_questoes(request):
-    user = request.user
-    delete = request.POST.get('delete')
+    if request.method == 'POST':
+        user = request.user
+        delete = request.POST.get('delete')
 
-    if delete == "Deletar":
-        Resposta.objects.filter(usuario=user).delete()
-        messages.success(request, f'Suas estatísticas foram zeradas com sucesso!')
-        return redirect('dashboard')
+        if delete == "Deletar":
+            Resposta.objects.filter(usuario=user).delete()
+            messages.success(request, f'Suas estatísticas foram zeradas com sucesso!')
+            return redirect('dashboard')
+    return redirect('dashboard')
