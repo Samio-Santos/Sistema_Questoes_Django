@@ -2,8 +2,8 @@
 FROM python:3.8-buster
 
 # Configurações para evitar criação de arquivos .pyc e buffer de saída
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
