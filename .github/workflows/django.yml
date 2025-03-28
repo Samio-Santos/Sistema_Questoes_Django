@@ -65,11 +65,15 @@ jobs:
       run: |
         # Configura o SSH
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+        echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
         
+        # Inicia o agente SSH
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/deploy_key
+        
         # Copia os arquivos para o servidor
-        scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no deploy.sh $EC2_USER@$EC2_HOST:~/
+        scp -o StrictHostKeyChecking=no deploy.sh $EC2_USER@$EC2_HOST:~/
         
         # Executa o script de deploy
-        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST 'chmod +x ~/deploy.sh && ~/deploy.sh' 
+        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST 'chmod +x ~/deploy.sh && ~/deploy.sh'
