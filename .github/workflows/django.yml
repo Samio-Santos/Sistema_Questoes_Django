@@ -81,4 +81,4 @@ jobs:
           cd $EC2_APP_DIR
           chmod +x deploy.sh
           ./deploy.sh
-EOF
+        EOF
