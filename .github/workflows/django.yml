@@ -64,6 +64,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         EC2_APP_DIR: ${{ secrets.EC2_APP_DIR }}
       run: |
+        echo "EC2_APP_DIR: $EC2_APP_DIR"
         # Configura o SSH
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
