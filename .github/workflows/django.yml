@@ -62,10 +62,8 @@ jobs:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        APP_DIR: ${{ secrets.EC2_APP_DIR }}
+        EC2_APP_DIR: ${{ secrets.EC2_APP_DIR }}
       run: |
-        echo "::add-mask::$APP_DIR"
-        echo "APP_DIR sem máscara: $APP_DIR"
         # Configura o SSH
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
@@ -76,11 +74,11 @@ jobs:
         ssh-add ~/.ssh/deploy_key
         
         # Copia os arquivos para o servidor remoto
-        scp -o StrictHostKeyChecking=no deploy.sh $EC2_USER@$EC2_HOST:$APP_DIR/
+        scp -o StrictHostKeyChecking=no deploy.sh $EC2_USER@$EC2_HOST:$EC2_APP_DIR/
         
         # Executa o script de deploy no servidor remoto
         ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-          cd $APP_DIR
+          cd $EC2_APP_DIR
           chmod +x deploy.sh
           ./deploy.sh
         EOF
