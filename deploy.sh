@@ -3,6 +3,9 @@
 # Para o script em caso de erro
 set -e  
 
+# Muda para o diretório do script
+cd "$(dirname "$0")"
+
 # Força o reset das alterações locais
 git reset --hard HEAD
 git clean -fd
