@@ -73,8 +73,8 @@ jobs:
         eval "$(ssh-agent -s)"
         ssh-add ~/.ssh/deploy_key
         
-        # Copia os arquivos para o servidor remoto
-        scp -o StrictHostKeyChecking=no deploy.sh $EC2_USER@$EC2_HOST:$EC2_APP_DIR/
+        # Executa o script de deploy no servidor remoto
+        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
         
         # Executa o script de deploy no servidor remoto
         ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
