@@ -6,6 +6,8 @@ set -e
 # Muda para o diretório do script
 cd "$(dirname "$0")"
 
+echo "$(dirname "$0")"
+
 # Força o reset das alterações locais
 git reset --hard HEAD
 git clean -fd
@@ -27,3 +29,6 @@ docker exec sistema_container python manage.py collectstatic --noinput
 
 # Reinicia os containers
 docker-compose restart
+
+echo "Listando arquivos no diretório atual:"
+ls -la

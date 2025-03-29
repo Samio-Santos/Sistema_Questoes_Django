@@ -78,12 +78,7 @@ jobs:
         
         # Executa o script de deploy no servidor remoto
         ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-          # Muda para o diretório do projeto no servidor remoto
           cd $APP_DIR
-          
-          # Dá permissão de execução ao script
           chmod +x deploy.sh
-          
-          # Executa o script de deploy
           ./deploy.sh
         EOF
