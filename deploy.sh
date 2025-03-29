@@ -3,8 +3,11 @@
 # Para o script em caso de erro
 set -e  
 
-# Desfaz alterações locais e reseta para a versão remota
+# Força o reset das alterações locais
 git reset --hard HEAD
+git clean -fd
+
+# Atualiza o código
 git pull origin main
 
 # Constrói e recria os containers
@@ -12,11 +15,11 @@ docker-compose down
 docker-compose build
 docker-compose up -d
 
-# Aplica migrações dentro do container Django
+# Aplica migrações dentro do container Django (removido -it)
 docker exec sistema_container python manage.py makemigrations
 docker exec sistema_container python manage.py migrate
 
-# Coleta arquivos estáticos
+# Coleta arquivos estáticos (removido -it)
 docker exec sistema_container python manage.py collectstatic --noinput
 
 # Reinicia os containers
