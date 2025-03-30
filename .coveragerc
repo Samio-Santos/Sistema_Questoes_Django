@@ -1,0 +1,18 @@
+[run]
+omit =
+    */migrations/*
+    */tests/*
+    manage.py
+    */__init__.py
+    */admin.py
+    */apps.py
+    */urls.py
+    */settings.py
+    */tests.py
+
+[report]
+exclude_lines =
+    # Não conte as linhas de teste
+    def test
+    # Não conte as linhas de if __name__ == '__main__':
+    if __name__ == .__main__.: 

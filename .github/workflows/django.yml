@@ -42,6 +42,7 @@ jobs:
       run: |
         coverage run manage.py test
         coverage report --fail-under=85
+        coverage report
 
   deploy:
     needs: test
