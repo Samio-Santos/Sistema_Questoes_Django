@@ -7,6 +7,6 @@ midias_users/fotoPerfil/*
 .coverage
 .coveragerc
 *archive.py
-__pycahce__/*
+__pycache__/*
 .env
 static

@@ -34,13 +34,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Run Tests
+    - name: Run Tests with Coverage
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432/github_actions
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DEBUG: False
       run: |
-        python manage.py test
+        coverage run manage.py test
+        coverage report --fail-under=85
 
   deploy:
     needs: test
@@ -71,10 +72,7 @@ jobs:
         
         # Inicia o agente SSH
         eval "$(ssh-agent -s)"
-        ssh-add ~/.ssh/deploy_key
-        
-        # Copia os arquivos para o servidor remoto (se necessário)
-        #scp -o StrictHostKeyChecking=no deploy.sh $EC2_USER@$EC2_HOST:$EC2_APP_DIR/
+        ssh-add ~/.ssh/deploy_key 
         
         # Executa o script de deploy no servidor remoto
         ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
